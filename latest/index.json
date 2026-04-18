@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "fragments": [
+    {
+      "type": "compose",
+      "name": "valkey",
+      "description": "Valkey - The Redis-compatible in-memory data structure store",
+      "path": "compose/valkey.yml",
+      "metadataPath": "compose/valkey.json"
+    },
+    {
+      "type": "compose",
+      "name": "redis",
+      "description": "Redis key-value store",
+      "path": "compose/redis.yml",
+      "metadataPath": "compose/redis.json"
+    },
+    {
+      "type": "compose",
+      "name": "postgresql",
+      "description": "PostgreSQL database service",
+      "path": "compose/postgresql.yml",
+      "metadataPath": "compose/postgresql.json"
+    }
+  ]
+}
