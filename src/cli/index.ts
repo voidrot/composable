@@ -127,9 +127,29 @@ program
           }
         }
 
+        // Add top-level volumes, networks, and configs if they exist in the fragment
+        const topLevelKeys = ["volumes", "networks", "configs"];
+        for (const key of topLevelKeys) {
+          const fragmentNode = fragmentDoc.get(key) as any;
+          if (fragmentNode && fragmentNode.items) {
+            let mainNode = doc.get(key) as any;
+            if (!mainNode) {
+              mainNode = doc.createNode({});
+              doc.set(key, mainNode);
+            }
+            for (const item of fragmentNode.items) {
+              const itemName = item.key.value;
+              // Only set if not already present to avoid overwriting user config
+              if (!mainNode.has(itemName)) {
+                mainNode.set(itemName, item.value);
+              }
+            }
+          }
+        }
+
         await fs.writeFile(composePath, doc.toString());
         console.log(
-          `Added service to ${path.basename(composePath)} using extends`,
+          `Added service and associated resources to ${path.basename(composePath)} using extends`,
         );
       }
 
