@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.5.0](https://github.com/voidrot/composable/compare/composable-v0.4.0...composable-v0.5.0) (2026-04-18)
+
+
+### Features
+
+* add --name option to support custom service naming and variable mapping ([e5be9f1](https://github.com/voidrot/composable/commit/e5be9f1cf1e00a793882a64d1a5322f3131e28e3))
+* add GPU configuration support and Ollama/vLLM compose fragments ([1c2d63a](https://github.com/voidrot/composable/commit/1c2d63aa6737ae718d371594f5c40ca70a7da884))
+* architect dynamic configuration and expand django ecosystem ([488ffd8](https://github.com/voidrot/composable/commit/488ffd80c0dfa00a53d0846cf2d40cfbb54b4250))
+
 ## [0.4.0](https://github.com/voidrot/composable/compare/composable-v0.3.0...composable-v0.4.0) (2026-04-18)
 
 
