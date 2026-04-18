@@ -1,8 +1,0 @@
-{
-  "name": "valkey",
-  "description": "Valkey - The Redis-compatible in-memory data structure store",
-  "variables": {
-    "VALKEY_VERSION": "9",
-    "VALKEY_PORT": "6379"
-  }
-}

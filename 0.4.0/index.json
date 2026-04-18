@@ -5,120 +5,155 @@
       "type": "compose",
       "name": "vllm",
       "description": "High-throughput and memory-efficient LLM inference and serving engine.",
-      "path": "compose/vllm.yml",
-      "metadataPath": "compose/vllm.json"
+      "path": "fragments/compose/vllm.yml",
+      "metadataPath": "fragments/compose/vllm.json"
     },
     {
       "type": "compose",
       "name": "valkey",
       "description": "Valkey - The Redis-compatible in-memory data structure store",
-      "path": "compose/valkey.yml",
-      "metadataPath": "compose/valkey.json"
+      "path": "fragments/compose/valkey.yml",
+      "metadataPath": "fragments/compose/valkey.json"
     },
     {
       "type": "compose",
       "name": "traefik",
       "description": "Traefik modern reverse proxy and load balancer",
-      "path": "compose/traefik.yml",
-      "metadataPath": "compose/traefik.json"
+      "path": "fragments/compose/traefik.yml",
+      "metadataPath": "fragments/compose/traefik.json"
     },
     {
       "type": "compose",
       "name": "traefik-config",
       "description": "",
-      "path": "compose/traefik-config.yml",
-      "metadataPath": "compose/traefik-config.json"
+      "path": "fragments/compose/traefik-config.yml",
+      "metadataPath": "fragments/compose/traefik-config.json"
     },
     {
       "type": "compose",
       "name": "redis",
       "description": "Redis key-value store",
-      "path": "compose/redis.yml",
-      "metadataPath": "compose/redis.json"
+      "path": "fragments/compose/redis.yml",
+      "metadataPath": "fragments/compose/redis.json"
     },
     {
       "type": "compose",
       "name": "rabbitmq",
       "description": "RabbitMQ message broker with Management UI enabled",
-      "path": "compose/rabbitmq.yml",
-      "metadataPath": "compose/rabbitmq.json"
+      "path": "fragments/compose/rabbitmq.yml",
+      "metadataPath": "fragments/compose/rabbitmq.json"
     },
     {
       "type": "compose",
       "name": "postgresql",
       "description": "PostgreSQL database service",
-      "path": "compose/postgresql.yml",
-      "metadataPath": "compose/postgresql.json"
+      "path": "fragments/compose/postgresql.yml",
+      "metadataPath": "fragments/compose/postgresql.json"
     },
     {
       "type": "compose",
       "name": "otel-collector",
       "description": "OpenTelemetry Collector Contrib",
-      "path": "compose/otel-collector.yml",
-      "metadataPath": "compose/otel-collector.json"
+      "path": "fragments/compose/otel-collector.yml",
+      "metadataPath": "fragments/compose/otel-collector.json"
     },
     {
       "type": "compose",
       "name": "ollama",
       "description": "Get up and running with large language models.",
-      "path": "compose/ollama.yml",
-      "metadataPath": "compose/ollama.json"
+      "path": "fragments/compose/ollama.yml",
+      "metadataPath": "fragments/compose/ollama.json"
     },
     {
       "type": "compose",
       "name": "nats",
       "description": "NATS message broker with JetStream enabled",
-      "path": "compose/nats.yml",
-      "metadataPath": "compose/nats.json"
+      "path": "fragments/compose/nats.yml",
+      "metadataPath": "fragments/compose/nats.json"
     },
     {
       "type": "compose",
       "name": "jaeger",
       "description": "Jaeger distributed tracing system (all-in-one)",
-      "path": "compose/jaeger.yml",
-      "metadataPath": "compose/jaeger.json"
+      "path": "fragments/compose/jaeger.yml",
+      "metadataPath": "fragments/compose/jaeger.json"
     },
     {
       "type": "compose",
       "name": "influxdb",
       "description": "InfluxDB time series database",
-      "path": "compose/influxdb.yml",
-      "metadataPath": "compose/influxdb.json"
+      "path": "fragments/compose/influxdb.yml",
+      "metadataPath": "fragments/compose/influxdb.json"
     },
     {
       "type": "compose",
       "name": "grafana",
       "description": "Grafana observability and visualization platform",
-      "path": "compose/grafana.yml",
-      "metadataPath": "compose/grafana.json"
+      "path": "fragments/compose/grafana.yml",
+      "metadataPath": "fragments/compose/grafana.json"
     },
     {
       "type": "compose",
       "name": "eclipse-mosquitto",
       "description": "Eclipse Mosquitto MQTT broker",
-      "path": "compose/eclipse-mosquitto.yml",
-      "metadataPath": "compose/eclipse-mosquitto.json"
+      "path": "fragments/compose/eclipse-mosquitto.yml",
+      "metadataPath": "fragments/compose/eclipse-mosquitto.json"
+    },
+    {
+      "type": "compose",
+      "name": "django",
+      "description": "Django web framework using python:3.14",
+      "path": "fragments/compose/django.yml",
+      "metadataPath": "fragments/compose/django.json"
     },
     {
       "type": "compose",
       "name": "chromadb",
       "description": "Open-source AI application database (vector database)",
-      "path": "compose/chromadb.yml",
-      "metadataPath": "compose/chromadb.json"
+      "path": "fragments/compose/chromadb.yml",
+      "metadataPath": "fragments/compose/chromadb.json"
+    },
+    {
+      "type": "compose",
+      "name": "celery",
+      "description": "Celery worker for Django",
+      "path": "fragments/compose/celery.yml",
+      "metadataPath": "fragments/compose/celery.json"
+    },
+    {
+      "type": "compose",
+      "name": "celery-flower",
+      "description": "Celery Flower monitor for Django",
+      "path": "fragments/compose/celery-flower.yml",
+      "metadataPath": "fragments/compose/celery-flower.json"
+    },
+    {
+      "type": "compose",
+      "name": "celery-beat",
+      "description": "Celery beat scheduler for Django",
+      "path": "fragments/compose/celery-beat.yml",
+      "metadataPath": "fragments/compose/celery-beat.json"
     },
     {
       "type": "compose",
       "name": "caddy",
       "description": "Caddy web server with automatic HTTPS",
-      "path": "compose/caddy.yml",
-      "metadataPath": "compose/caddy.json"
+      "path": "fragments/compose/caddy.yml",
+      "metadataPath": "fragments/compose/caddy.json"
     },
     {
       "type": "compose",
       "name": "arcadedb",
       "description": "Multi-model database engine (Graph, Document, Key/Value, Search)",
-      "path": "compose/arcadedb.yml",
-      "metadataPath": "compose/arcadedb.json"
+      "path": "fragments/compose/arcadedb.yml",
+      "metadataPath": "fragments/compose/arcadedb.json"
+    }
+  ],
+  "stacks": [
+    {
+      "name": "django-base",
+      "description": "A complete Django stack with PostgreSQL, Valkey, Celery, and Flower",
+      "path": "stacks/django-base.json"
     }
   ]
 }

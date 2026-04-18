@@ -1,0 +1,29 @@
+{
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "name": "celery",
+  "description": "Celery worker for Django",
+  "variables": {},
+  "build": {
+    "context": ".",
+    "dockerfile": "Dockerfile"
+  },
+  "watch": [
+    {
+      "action": "sync",
+      "path": ".",
+      "target": "/app",
+      "ignore": [
+        "node_modules/",
+        ".git/",
+        "__pycache__/",
+        "*.pyc"
+      ]
+    },
+    {
+      "action": "rebuild",
+      "path": "requirements.txt"
+    }
+  ],
+  "env_file": false,
+  "env_file_vars": []
+}
