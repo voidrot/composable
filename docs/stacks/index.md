@@ -16,16 +16,15 @@ To ensure your stacks are valid, a JSON schema is available at `schemas/stack.sc
 
 ## Available Stacks
 
-### `django-base`
+### [django-base](django-base.md)
 
-A production-ready foundation for Django applications. 
+A complete Django stack with PostgreSQL, Valkey, Celery, and Flower
 
-- **Components**: 
-    - `postgresql` (Database)
-    - `valkey` (Cache / Broker)
-    - `django` (Web Application)
-    - `celery` (Background Worker)
-    - `celery-beat` (Scheduler)
-    - `celery-flower` (Monitoring)
-- **Features**: Automatic dependency linking, shared build context, and hot-reloading for the web and worker services.
+- **Components**:
+    - [postgresql](../fragments/compose/postgresql.md)
+    - [valkey](../fragments/compose/valkey.md)
+    - [django](../fragments/compose/django.md)
+    - [celery](../fragments/compose/celery.md)
+    - [celery-beat](../fragments/compose/celery-beat.md)
+    - [celery-flower](../fragments/compose/celery-flower.md)
 
