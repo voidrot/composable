@@ -3,6 +3,13 @@
   "fragments": [
     {
       "type": "compose",
+      "name": "vllm",
+      "description": "High-throughput and memory-efficient LLM inference and serving engine.",
+      "path": "compose/vllm.yml",
+      "metadataPath": "compose/vllm.json"
+    },
+    {
+      "type": "compose",
       "name": "valkey",
       "description": "Valkey - The Redis-compatible in-memory data structure store",
       "path": "compose/valkey.yml",
@@ -49,6 +56,13 @@
       "description": "OpenTelemetry Collector Contrib",
       "path": "compose/otel-collector.yml",
       "metadataPath": "compose/otel-collector.json"
+    },
+    {
+      "type": "compose",
+      "name": "ollama",
+      "description": "Get up and running with large language models.",
+      "path": "compose/ollama.yml",
+      "metadataPath": "compose/ollama.json"
     },
     {
       "type": "compose",

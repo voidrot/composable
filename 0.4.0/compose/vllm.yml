@@ -1,0 +1,19 @@
+services:
+  vllm:
+    image: vllm/vllm-openai:${VLLM_VERSION:-latest}
+    command: --model ${VLLM_MODEL:-mistralai/Mistral-7B-v0.1} --host 0.0.0.0 --port 8000
+    ports:
+      - "${VLLM_PORT:-8000}:8000"
+    volumes:
+      - vllm_data:/root/.cache/huggingface
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: ${GPU_DRIVER:-nvidia}
+              count: ${GPU_COUNT:-all}
+              capabilities: [gpu]
+
+volumes:
+  vllm_data:
