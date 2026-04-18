@@ -50,6 +50,10 @@ program
     "Add the service directly to an existing compose.yml using extends syntax",
   )
   .option(
+    "-n, --name <customName>",
+    "Override the name of the service",
+  )
+  .option(
     "--gpu [driver]",
     "Specify the GPU driver type",
     "nvidia",
@@ -81,6 +85,39 @@ program
           await fs.writeFile(localMetadataPath, metadataContent);
         } catch (e) {
           // Metadata might not exist
+        }
+      }
+
+      // Load metadata early to process environment variable mapping
+      let metadata: any = {};
+      if (await fs.pathExists(localMetadataPath)) {
+        metadata = await fs.readJson(localMetadataPath);
+      }
+
+      const fragmentContentForGpu = await fs.readFile(localFragmentPath, "utf-8");
+      const hasGpu = fragmentContentForGpu.includes("GPU_DRIVER") || fragmentContentForGpu.includes("GPU_COUNT");
+
+      if (hasGpu) {
+        metadata.variables = metadata.variables || {};
+        metadata.variables["GPU_DRIVER"] = options.gpu;
+        metadata.variables["GPU_COUNT"] = options.gpuCount;
+      }
+
+      // Generate variable mapping if custom name is provided
+      const envMapping: Record<string, string> = {};
+      if (metadata.variables) {
+        for (const key of Object.keys(metadata.variables)) {
+          if (options.name) {
+            const customNameUpper = options.name.toUpperCase().replace(/[^A-Z0-9]/g, '_');
+            const originalNameUpper = name.toUpperCase().replace(/[^A-Z0-9]/g, '_');
+            if (key.startsWith(`${originalNameUpper}_`)) {
+              envMapping[key] = key.replace(new RegExp(`^${originalNameUpper}_`), `${customNameUpper}_`);
+            } else {
+              envMapping[key] = `${customNameUpper}_${key}`;
+            }
+          } else {
+            envMapping[key] = key;
+          }
         }
       }
 
@@ -124,16 +161,31 @@ program
 
         if (fragmentServices && fragmentServices.items) {
           for (const item of fragmentServices.items) {
-            const serviceName = item.key.value;
-            servicesNode.set(
-              serviceName,
-              doc.createNode({
-                extends: {
-                  file: `.compose/${name}.yml`,
-                  service: serviceName,
-                },
-              }),
-            );
+            const originalServiceName = item.key.value;
+            const finalServiceName = options.name || originalServiceName;
+            
+            const serviceConfig: any = {
+              extends: {
+                file: `.compose/${name}.yml`,
+                service: originalServiceName,
+              },
+            };
+
+            // If we have custom mapped variables, pass them via environment
+            if (options.name && Object.keys(envMapping).length > 0) {
+              const envNode: any = {};
+              for (const [origKey, mappedKey] of Object.entries(envMapping)) {
+                envNode[origKey] = `\${${mappedKey}}`;
+              }
+              serviceConfig.environment = envNode;
+            }
+
+            const serviceNode = doc.createNode(serviceConfig);
+            if (options.name) {
+              serviceNode.commentBefore = ` Original fragment: ${type}/${name} (service: ${originalServiceName})`;
+            }
+
+            servicesNode.set(finalServiceName, serviceNode);
           }
         }
 
@@ -161,23 +213,30 @@ program
         console.log(
           `Added service and associated resources to ${path.basename(composePath)} using extends`,
         );
+
+        // Track override state
+        if (options.name) {
+          const statePath = path.join(process.cwd(), ".composable-state.json");
+          let state: any = { services: {} };
+          if (await fs.pathExists(statePath)) {
+            try {
+              state = await fs.readJson(statePath);
+            } catch (e) {
+              state = { services: {} };
+            }
+          }
+          if (!state.services) state.services = {};
+          
+          state.services[options.name] = {
+            fragment: `${type}/${name}`,
+            originalName: name
+          };
+          await fs.writeJson(statePath, state, { spaces: 2 });
+          console.log(`Updated state in .composable-state.json`);
+        }
       }
 
-      // Handle configs and variables
-      const fragmentContentForGpu = await fs.readFile(localFragmentPath, "utf-8");
-      const hasGpu = fragmentContentForGpu.includes("GPU_DRIVER") || fragmentContentForGpu.includes("GPU_COUNT");
-
-      let metadata: any = {};
-      if (await fs.pathExists(localMetadataPath)) {
-        metadata = await fs.readJson(localMetadataPath);
-      }
-
-      if (hasGpu) {
-        metadata.variables = metadata.variables || {};
-        metadata.variables["GPU_DRIVER"] = options.gpu;
-        metadata.variables["GPU_COUNT"] = options.gpuCount;
-      }
-
+      // Handle configs and variables (continued)
       if (metadata.configs || metadata.variables) {
         if (metadata.configs && Array.isArray(metadata.configs)) {
           for (const config of metadata.configs) {
@@ -225,23 +284,24 @@ program
 
           const existingVars = dotenv.parse(envContent);
           let updated = false;
-          let newLines = "\n# Composable variables for " + name + "\n";
+          let newLines = "\n# Composable variables for " + (options.name || name) + "\n";
 
           for (const [key, value] of Object.entries(metadata.variables)) {
-            if (!(key in existingVars)) {
-              newLines += `${key}=${value}\n`;
+            const mappedKey = envMapping[key];
+            if (mappedKey && !(mappedKey in existingVars)) {
+              newLines += `${mappedKey}=${value}\n`;
               updated = true;
             }
           }
 
           if (updated) {
             await fs.appendFile(envPath, newLines);
-            console.log(`Updated .env with default variables for ${name}`);
+            console.log(`Updated .env with default variables for ${options.name || name}`);
           }
         }
       }
 
-      console.log(`Successfully added ${name} to ./.compose/${name}.yml`);
+      console.log(`Successfully added ${options.name || name} to ./.compose/${name}.yml`);
     } catch (error: any) {
       console.error(`Error adding fragment: ${error.message}`);
     }
