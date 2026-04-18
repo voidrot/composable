@@ -1,0 +1,52 @@
+name: Scheduled Fragment Updates
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Run weekly on Sunday
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  update-fragments:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Update Docker Tags
+        run: node scripts/update-tags.js
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Copilot Update Issue
+        if: steps.check_changes.outputs.changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "Update fragment image versions and docs",
+              body: "The scheduled job has detected updated Docker image tags. Please assign Copilot to review these changes, update environment variables in `.yml` and `.json` files as needed, and ensure the corresponding `docs/fragments/` and `docs/stacks/` markdown files are updated with the latest frontmatter.\n\n@copilot review these changes and submit a pull request.",
+              labels: ["automated-update"]
+            });
+            console.log(`Created issue ${issue.data.number}`);

@@ -17,7 +17,8 @@ async function buildRegistry() {
 
     const index = {
         version,
-        fragments: [] as any[]
+        fragments: [] as any[],
+        stacks: [] as any[]
     };
 
     const fragmentFiles = await glob('**/*.yml', { cwd: fragmentsDir });
@@ -33,7 +34,7 @@ async function buildRegistry() {
         }
 
         // Copy files to version dir
-        const targetTypeDir = path.join(versionDir, type);
+        const targetTypeDir = path.join(versionDir, 'fragments', type);
         await fs.ensureDir(targetTypeDir);
         await fs.copy(path.join(fragmentsDir, file), path.join(targetTypeDir, `${name}.yml`));
         if (await fs.pathExists(metadataFile)) {
@@ -44,7 +45,6 @@ async function buildRegistry() {
                         const sourcePath = path.join(fragmentsDir, type, config.source);
                         const targetPath = path.join(targetTypeDir, config.source);
                         if (await fs.pathExists(sourcePath)) {
-                            // Ensure the subdirectory in targetTypeDir exists if source contains slashes
                             await fs.ensureDir(path.dirname(targetPath));
                             await fs.copy(sourcePath, targetPath);
                         } else {
@@ -59,9 +59,27 @@ async function buildRegistry() {
             type,
             name,
             description: metadata.description,
-            path: file,
-            metadataPath: `${type}/${name}.json`
+            path: `fragments/${type}/${name}.yml`,
+            metadataPath: `fragments/${type}/${name}.json`
         });
+    }
+
+    const stacksDir = path.join(process.cwd(), 'stacks');
+    if (await fs.pathExists(stacksDir)) {
+        const stackFiles = await glob('*.json', { cwd: stacksDir });
+        const targetStacksDir = path.join(versionDir, 'stacks');
+        await fs.ensureDir(targetStacksDir);
+
+        for (const file of stackFiles) {
+            const stackPath = path.join(stacksDir, file);
+            const stackData = await fs.readJson(stackPath);
+            await fs.copy(stackPath, path.join(targetStacksDir, file));
+            index.stacks.push({
+                name: stackData.name,
+                description: stackData.description,
+                path: `stacks/${file}`
+            });
+        }
     }
 
     await fs.writeJson(path.join(versionDir, 'index.json'), index, { spaces: 2 });
@@ -71,6 +89,13 @@ async function buildRegistry() {
     const docsDest = path.join(registryDir, 'docs');
     if (await fs.pathExists(docsSrc)) {
         await fs.copy(docsSrc, docsDest);
+    }
+
+    // Add schemas
+    const schemasSrc = path.join(process.cwd(), 'schemas');
+    const schemasDest = path.join(versionDir, 'schemas');
+    if (await fs.pathExists(schemasSrc)) {
+        await fs.copy(schemasSrc, schemasDest);
     }
 
     // Update latest

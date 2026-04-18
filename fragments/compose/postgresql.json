@@ -8,5 +8,8 @@
     "POSTGRES_DB": "postgres",
     "PGDATA": "/var/lib/postgresql/data",
     "POSTGRES_PORT": "5432"
-  }
+  },
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "env_file": true,
+  "env_file_vars": []
 }

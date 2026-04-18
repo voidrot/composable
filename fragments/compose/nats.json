@@ -6,5 +6,8 @@
     "NATS_CLIENT_PORT": "4222",
     "NATS_MONITORING_PORT": "8222",
     "NATS_CLUSTER_PORT": "6222"
-  }
+  },
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "env_file": true,
+  "env_file_vars": []
 }

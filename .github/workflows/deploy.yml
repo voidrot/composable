@@ -49,6 +49,20 @@ jobs:
       - name: Build Registry
         run: npm run build:registry
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - name: Install MkDocs
+        run: pip install mkdocs-material
+
+      - name: Build Docs
+        run: mkdocs build -d site
+
+      - name: Merge Docs to Registry
+        run: cp -r site/* registry/
+
       - name: Sync back to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:

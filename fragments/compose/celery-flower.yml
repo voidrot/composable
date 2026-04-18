@@ -1,0 +1,9 @@
+services:
+  celery-flower:
+    image: python:3.14
+    command: celery -A core flower
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "${FLOWER_PORT:-5555}:5555"
