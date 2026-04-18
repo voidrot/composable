@@ -21,3 +21,7 @@ The following environment variables can be configured:
 | `NATS_CLIENT_PORT` | `4222` | | 
 | `NATS_MONITORING_PORT` | `8222` | | 
 | `NATS_CLUSTER_PORT` | `6222` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

@@ -24,3 +24,7 @@ The following environment variables can be configured:
 | `INFLUXDB_ORG` | `myorg` | | 
 | `INFLUXDB_BUCKET` | `mybucket` | | 
 | `INFLUXDB_ADMIN_TOKEN` | `mysupersecrettoken` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

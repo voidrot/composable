@@ -15,5 +15,7 @@ No description provided.
 
 The following environment variables can be configured:
 
+| Variable | Default Value | Description |
+|----------|---------------|-------------|
 
 No environment variables are required.

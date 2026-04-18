@@ -21,3 +21,7 @@ The following environment variables can be configured:
 | `TRAEFIK_HTTP_PORT` | `80` | | 
 | `TRAEFIK_HTTPS_PORT` | `443` | | 
 | `TRAEFIK_DASHBOARD_PORT` | `8080` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

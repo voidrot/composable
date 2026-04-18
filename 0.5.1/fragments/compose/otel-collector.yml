@@ -1,0 +1,11 @@
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:${OTEL_VERSION:-latest}
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    volumes:
+      - ./config/otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+    ports:
+      - ${OTEL_RECEIVER_GRPC_PORT:-4317}:4317 # OTLP gRPC receiver
+      - ${OTEL_RECEIVER_HTTP_PORT:-4318}:4318 # OTLP http receiver
+      - ${OTEL_METRICS_PORT:-8888}:8888       # Metrics
+      - ${OTEL_HEALTH_PORT:-13133}:13133      # Healthcheck

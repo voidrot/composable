@@ -21,3 +21,7 @@ The following environment variables can be configured:
 | `JAEGER_UI_PORT` | `16686` | | 
 | `JAEGER_OTLP_GRPC_PORT` | `4317` | | 
 | `JAEGER_OTLP_HTTP_PORT` | `4318` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

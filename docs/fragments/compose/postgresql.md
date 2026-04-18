@@ -23,3 +23,7 @@ The following environment variables can be configured:
 | `POSTGRES_DB` | `postgres` | | 
 | `PGDATA` | `/var/lib/postgresql/data` | | 
 | `POSTGRES_PORT` | `5432` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

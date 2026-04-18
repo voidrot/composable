@@ -21,3 +21,7 @@ The following environment variables can be configured:
 | `CADDY_HTTP_PORT` | `80` | | 
 | `CADDY_HTTPS_PORT` | `443` | | 
 | `CADDY_HTTPS_UDP_PORT` | `443` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

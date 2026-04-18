@@ -22,3 +22,7 @@ The following environment variables can be configured:
 | `RABBITMQ_UI_PORT` | `15672` | | 
 | `RABBITMQ_USER` | `guest` | | 
 | `RABBITMQ_PASSWORD` | `guest` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

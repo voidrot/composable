@@ -22,3 +22,7 @@ The following environment variables can be configured:
 | `OLLAMA_KEEP_ALIVE` | `5m` | | 
 | `OLLAMA_FLASH_ATTENTION` | `1` | | 
 | `OLLAMA_KV_CACHE_TYPE` | `q8_0` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

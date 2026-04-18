@@ -20,3 +20,7 @@ The following environment variables can be configured:
 | `VLLM_VERSION` | `latest` | | 
 | `VLLM_PORT` | `8000` | | 
 | `VLLM_MODEL` | `mistralai/Mistral-7B-v0.1` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "name": "django",
+  "description": "Django web framework using python:3.14",
+  "variables": {
+    "DJANGO_PORT": "8000"
+  },
+  "build": {
+    "context": ".",
+    "dockerfile": "Dockerfile"
+  },
+  "watch": [
+    {
+      "action": "sync",
+      "path": ".",
+      "target": "/app",
+      "ignore": [
+        "node_modules/",
+        ".git/",
+        "__pycache__/",
+        "*.pyc"
+      ]
+    },
+    {
+      "action": "rebuild",
+      "path": "requirements.txt"
+    }
+  ],
+  "env_file": true,
+  "env_file_vars": []
+}
