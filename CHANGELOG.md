@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/voidrot/composable/compare/composable-v0.3.0...composable-v0.4.0) (2026-04-18)
+
+
+### Features
+
+* merge top-level volumes, networks, and configs from fragments into compose file and ignore /scratch directory ([3062289](https://github.com/voidrot/composable/commit/3062289467c382a1a881812d0d680fb1cb9593e3))
+
 ## [0.3.0](https://github.com/voidrot/composable/compare/composable-v0.2.0...composable-v0.3.0) (2026-04-18)
 
 
