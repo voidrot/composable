@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `OLLAMA_VERSION` | `latest` | | 
+| `OLLAMA_VERSION` | `0.21.0` | | 
 | `OLLAMA_PORT` | `11434` | | 
 | `OLLAMA_KEEP_ALIVE` | `5m` | | 
 | `OLLAMA_FLASH_ATTENTION` | `1` | | 

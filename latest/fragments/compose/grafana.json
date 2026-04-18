@@ -2,7 +2,7 @@
   "name": "grafana",
   "description": "Grafana observability and visualization platform",
   "variables": {
-    "GRAFANA_VERSION": "latest",
+    "GRAFANA_VERSION": "13.0",
     "GRAFANA_PORT": "3000",
     "GRAFANA_ADMIN_PASSWORD": "admin"
   },

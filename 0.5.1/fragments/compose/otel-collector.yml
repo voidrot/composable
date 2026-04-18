@@ -1,6 +1,6 @@
 services:
   otel-collector:
-    image: otel/opentelemetry-collector-contrib:${OTEL_VERSION:-latest}
+    image: otel/opentelemetry-collector-contrib:${OTEL_VERSION:-0.150.1}
     command: ["--config=/etc/otelcol-contrib/config.yaml"]
     volumes:
       - ./config/otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml

@@ -1,6 +1,6 @@
 services:
   grafana:
-    image: grafana/grafana:${GRAFANA_VERSION:-latest}
+    image: grafana/grafana:${GRAFANA_VERSION:-13.0}
     ports:
       - ${GRAFANA_PORT:-3000}:3000
     environment:

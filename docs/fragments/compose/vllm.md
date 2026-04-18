@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `VLLM_VERSION` | `latest` | | 
+| `VLLM_VERSION` | `v0.19.1` | | 
 | `VLLM_PORT` | `8000` | | 
 | `VLLM_MODEL` | `mistralai/Mistral-7B-v0.1` | | 
 

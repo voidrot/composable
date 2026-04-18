@@ -1,6 +1,6 @@
 services:
   arcadedb:
-    image: arcadedata/arcadedb:${ARCADEDB_VERSION:-latest}
+    image: arcadedata/arcadedb:${ARCADEDB_VERSION:-26.3.2}
     ports:
       - ${ARCADEDB_STUDIO_PORT:-2480}:2480
       - ${ARCADEDB_BINARY_PORT:-2424}:2424

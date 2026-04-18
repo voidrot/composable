@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `ARCADEDB_VERSION` | `latest` | | 
+| `ARCADEDB_VERSION` | `26.3.2` | | 
 | `ARCADEDB_STUDIO_PORT` | `2480` | | 
 | `ARCADEDB_BINARY_PORT` | `2424` | | 
 | `ARCADEDB_ROOT_PASSWORD` | `playwithdata` | | 
