@@ -2,9 +2,11 @@
   "name": "postgresql",
   "description": "PostgreSQL database service",
   "variables": {
-    "POSTGRES_VERSION": "15",
-    "POSTGRES_USER": "admin",
-    "POSTGRES_PASSWORD": "password",
-    "POSTGRES_DB": "app_db"
+    "POSTGRES_VERSION": "18",
+    "POSTGRES_USER": "postgres",
+    "POSTGRES_PASSWORD": "postgres",
+    "POSTGRES_DB": "postgres",
+    "PGDATA": "/var/lib/postgresql/data",
+    "POSTGRES_PORT": "5432"
   }
 }

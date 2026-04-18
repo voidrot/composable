@@ -1,7 +1,8 @@
 {
   "name": "redis",
-  "description": "Redis in-memory data store",
+  "description": "Redis key-value store",
   "variables": {
-    "REDIS_VERSION": "7"
+    "REDIS_VERSION": "8",
+    "REDIS_PORT": "6379"
   }
 }
