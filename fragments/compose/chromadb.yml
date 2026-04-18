@@ -1,6 +1,6 @@
 services:
   chromadb:
-    image: ghcr.io/chroma-core/chroma:${CHROMA_VERSION:-latest}
+    image: ghcr.io/chroma-core/chroma:${CHROMA_VERSION:-1.5.8}
     ports:
       - ${CHROMA_PORT:-8000}:8000
     environment:

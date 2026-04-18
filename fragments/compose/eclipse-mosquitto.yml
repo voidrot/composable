@@ -1,6 +1,6 @@
 services:
   eclipse-mosquitto:
-    image: eclipse-mosquitto:${MOSQUITTO_VERSION:-latest}
+    image: eclipse-mosquitto:${MOSQUITTO_VERSION:-2}
     ports:
       - ${MOSQUITTO_MQTT_PORT:-1883}:1883
       - ${MOSQUITTO_WS_PORT:-9001}:9001
