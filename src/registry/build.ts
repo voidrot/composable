@@ -38,6 +38,21 @@ async function buildRegistry() {
         await fs.copy(path.join(fragmentsDir, file), path.join(targetTypeDir, `${name}.yml`));
         if (await fs.pathExists(metadataFile)) {
             await fs.copy(metadataFile, path.join(targetTypeDir, `${name}.json`));
+            if (metadata.configs && Array.isArray(metadata.configs)) {
+                for (const config of metadata.configs) {
+                    if (config.source) {
+                        const sourcePath = path.join(fragmentsDir, type, config.source);
+                        const targetPath = path.join(targetTypeDir, config.source);
+                        if (await fs.pathExists(sourcePath)) {
+                            // Ensure the subdirectory in targetTypeDir exists if source contains slashes
+                            await fs.ensureDir(path.dirname(targetPath));
+                            await fs.copy(sourcePath, targetPath);
+                        } else {
+                            console.warn(`Config source file not found: ${sourcePath}`);
+                        }
+                    }
+                }
+            }
         }
 
         index.fragments.push({

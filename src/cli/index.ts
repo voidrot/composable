@@ -105,9 +105,37 @@ program
         console.log(`Added service to ${path.basename(composePath)} using extends`);
       }
 
-      // Handle .env variables
+      // Handle configs and variables
       if (await fs.pathExists(localMetadataPath)) {
         const metadata = await fs.readJson(localMetadataPath);
+        
+        if (metadata.configs && Array.isArray(metadata.configs)) {
+          for (const config of metadata.configs) {
+            if (config.source && config.target) {
+              const configRegistryPath = path.join(type, config.source);
+              const localConfigCachePath = path.join(CACHE_DIR, configRegistryPath);
+              const targetConfigPath = path.join(process.cwd(), '.compose', config.target);
+
+              if (!await fs.pathExists(localConfigCachePath)) {
+                try {
+                  console.log(`Fetching config ${config.source}...`);
+                  const configContent = await fetchFromRegistry(configRegistryPath);
+                  await fs.ensureDir(path.dirname(localConfigCachePath));
+                  await fs.writeFile(localConfigCachePath, configContent);
+                } catch (e: any) {
+                  console.warn(`Failed to fetch config ${config.source}: ${e.message}`);
+                }
+              }
+
+              if (await fs.pathExists(localConfigCachePath)) {
+                await fs.ensureDir(path.dirname(targetConfigPath));
+                await fs.copy(localConfigCachePath, targetConfigPath);
+                console.log(`Added config to ./.compose/${config.target}`);
+              }
+            }
+          }
+        }
+
         if (metadata.variables) {
           const envPath = path.join(process.cwd(), '.env');
           let envContent = '';
@@ -187,6 +215,20 @@ program
           try {
             const json = await fetchFromRegistry(f.metadataPath);
             await fs.writeFile(path.join(CACHE_DIR, f.metadataPath), json);
+            const metadata = JSON.parse(json);
+            if (metadata.configs && Array.isArray(metadata.configs)) {
+              for (const config of metadata.configs) {
+                if (config.source) {
+                  const configPath = path.join(f.type, config.source);
+                  try {
+                    const configContent = await fetchFromRegistry(configPath);
+                    const localConfigPath = path.join(CACHE_DIR, configPath);
+                    await fs.ensureDir(path.dirname(localConfigPath));
+                    await fs.writeFile(localConfigPath, configContent);
+                  } catch (e) {}
+                }
+              }
+            }
           } catch (e) {}
         }
         console.log('All fragments cached successfully.');
@@ -211,6 +253,20 @@ program
       try {
         const json = await fetchFromRegistry(f.metadataPath);
         await fs.writeFile(path.join(CACHE_DIR, f.metadataPath), json);
+        const metadata = JSON.parse(json);
+        if (metadata.configs && Array.isArray(metadata.configs)) {
+          for (const config of metadata.configs) {
+            if (config.source) {
+              const configPath = path.join(f.type, config.source);
+              try {
+                const configContent = await fetchFromRegistry(configPath);
+                const localConfigPath = path.join(CACHE_DIR, configPath);
+                await fs.ensureDir(path.dirname(localConfigPath));
+                await fs.writeFile(localConfigPath, configContent);
+              } catch (e) {}
+            }
+          }
+        }
       } catch (e) {}
     }
     console.log('Cache updated.');
