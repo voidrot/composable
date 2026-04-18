@@ -3,22 +3,7 @@
     "release-type": "node",
     "packages": {
         ".": {
-            "release-type": "node",
-            "exclude-paths": [
-                "fragments",
-                "registry",
-                "src/registry",
-                "docs",
-                "stacks"
-            ]
-        },
-        "fragments": {
-            "release-type": "simple",
-            "component": "fragments"
-        },
-        "stacks": {
-            "release-type": "simple",
-            "component": "stacks"
+            "release-type": "node"
         }
     }
 }
