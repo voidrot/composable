@@ -26,7 +26,9 @@ composable search postgresql
 
 # Add a fragment to your project
 composable add compose postgresql
-composable add compose redis
+
+# Add a fragment and automatically extend it in your compose.yml
+composable add compose redis --extend
 ```
 
 When you add a fragment, it will be downloaded into your `./compose` directory, and any required default environment variables will be automatically appended to your `.env` file.
