@@ -1,0 +1,8 @@
+{
+  "name": "redis",
+  "description": "Redis key-value store",
+  "variables": {
+    "REDIS_VERSION": "8",
+    "REDIS_PORT": "6379"
+  }
+}
