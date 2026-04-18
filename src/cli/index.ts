@@ -3,6 +3,7 @@ import fs from 'fs-extra';
 import * as path from 'path';
 import * as os from 'os';
 import * as dotenv from 'dotenv';
+import yaml from 'yaml';
 
 const program = new Command();
 const CACHE_DIR = path.join(os.homedir(), '.composable', 'fragments');
@@ -29,7 +30,8 @@ async function fetchFromRegistry(filePath: string) {
 program
   .command('add <type> <name>')
   .description('Add a fragment to your project')
-  .action(async (type, name) => {
+  .option('-e, --extend', 'Add the service directly to an existing compose.yml using extends syntax')
+  .action(async (type, name, options) => {
     try {
       await ensureCacheDir();
       const fragmentPath = path.join(type, `${name}.yml`);
@@ -58,6 +60,50 @@ program
       const targetDir = path.join(process.cwd(), 'compose');
       await fs.ensureDir(targetDir);
       await fs.copy(localFragmentPath, path.join(targetDir, `${name}.yml`));
+
+      if (options.extend) {
+        const composeFiles = ['compose.yml', 'compose.yaml', 'docker-compose.yml', 'docker-compose.yaml'];
+        let composePath = '';
+        for (const file of composeFiles) {
+          if (await fs.pathExists(path.join(process.cwd(), file))) {
+            composePath = path.join(process.cwd(), file);
+            break;
+          }
+        }
+        
+        if (!composePath) {
+          composePath = path.join(process.cwd(), 'compose.yml');
+          await fs.writeFile(composePath, 'services:\n');
+        }
+
+        const composeContent = await fs.readFile(composePath, 'utf-8');
+        const doc = yaml.parseDocument(composeContent);
+        
+        const fragmentContent = await fs.readFile(localFragmentPath, 'utf-8');
+        const fragmentDoc = yaml.parseDocument(fragmentContent);
+        
+        let servicesNode = doc.get('services') as any;
+        if (!servicesNode) {
+          servicesNode = doc.createNode({});
+          doc.set('services', servicesNode);
+        }
+        const fragmentServices = fragmentDoc.get('services') as any;
+
+        if (fragmentServices && fragmentServices.items) {
+          for (const item of fragmentServices.items) {
+            const serviceName = item.key.value;
+            servicesNode.set(serviceName, doc.createNode({
+              extends: {
+                file: `compose/${name}.yml`,
+                service: serviceName
+              }
+            }));
+          }
+        }
+
+        await fs.writeFile(composePath, doc.toString());
+        console.log(`Added service to ${path.basename(composePath)} using extends`);
+      }
 
       // Handle .env variables
       if (await fs.pathExists(localMetadataPath)) {
