@@ -28,9 +28,11 @@ nav:
           - valkey: fragments/compose/valkey.md
           - rabbitmq: fragments/compose/rabbitmq.md
           - nats: fragments/compose/nats.md
+          - mosquitto: fragments/compose/eclipse-mosquitto.md
           - ollama: fragments/compose/ollama.md
           - vllm: fragments/compose/vllm.md
           - traefik: fragments/compose/traefik.md
+          - traefik-config: fragments/compose/traefik-config.md
           - caddy: fragments/compose/caddy.md
           - chromadb: fragments/compose/chromadb.md
           - arcadedb: fragments/compose/arcadedb.md

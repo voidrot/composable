@@ -38,7 +38,32 @@ Update the local cache with the latest fragments from the registry.
 
 **Developer Tool**: Scans a `.yml` file for `${VAR}` syntax and generates a corresponding `.json` metadata file.
 
+## Global Configuration {#config}
+
+Composable can be configured globally via `~/.composable/config.yml`.
+
+### Example Configuration
+
+```yaml
+registries:
+  - name: default
+    url: https://voidrot.github.io/composable/latest
+defaults:
+  env_file: true
+  build: true
+  watch: true
+```
+
+### Options
+
+- **registries**: A list of fragment registries to use.
+- **defaults**: Global defaults for CLI options:
+    - `env_file`: Whether to add `env_file: - .env.compose` by default.
+    - `build`: Whether to inject `build` configurations by default.
+    - `watch`: Whether to inject `develop.watch` configurations by default.
+
 ## Release and Versioning
+
 
 This project uses Release Please with Conventional Commits:
 
