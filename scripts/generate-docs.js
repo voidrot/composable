@@ -62,6 +62,38 @@ The following environment variables can be configured:
         await fs.writeFile(outPath, docContent);
         console.log(`Generated ${outPath}`);
     }
+
+    await updateIndex(fragmentFiles);
+}
+
+async function updateIndex(fragmentFiles) {
+    const categories = {
+        "Databases & Caching": ["postgresql", "redis", "valkey", "chromadb", "arcadedb"],
+        "Message Brokers": ["rabbitmq", "nats", "eclipse-mosquitto"],
+        "AI / ML": ["ollama", "vllm"],
+        "Web & Routing": ["traefik", "caddy"],
+        "Observability": ["grafana", "influxdb", "jaeger", "otel-collector"],
+        "Application Frameworks": ["django", "celery", "celery-beat", "celery-flower"]
+    };
+
+    let indexContent = `## Available Compose Fragments\n\n`;
+
+    for (const [category, fragments] of Object.entries(categories)) {
+        indexContent += `- **${category}**:\n`;
+        for (const fragment of fragments) {
+            indexContent += `  - [${fragment}](compose/${fragment}.md)\n`;
+        }
+    }
+
+    const indexPath = path.join('docs', 'fragments', 'index.md');
+    const currentContent = await fs.readFile(indexPath, 'utf-8');
+    
+    const marker = '## Available Compose Fragments';
+    const beforeMarker = currentContent.split(marker)[0];
+    
+    await fs.writeFile(indexPath, beforeMarker + indexContent);
+    console.log(`Updated ${indexPath}`);
 }
 
 generateDocs().catch(console.error);
+
