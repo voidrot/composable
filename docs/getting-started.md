@@ -4,7 +4,19 @@ Composable is a collection of Docker Compose fragments and a CLI tool to manage 
 
 ## Installation
 
-Currently, you can install the CLI locally by cloning the repository and linking the package:
+Install the CLI from npm:
+
+```bash
+npm install -g @voidrot/composable
+```
+
+You can also run without global install:
+
+```bash
+npx @voidrot/composable search
+```
+
+For local development, clone the repository and build from source:
 
 ```bash
 git clone https://github.com/voidrot/composable.git
@@ -23,6 +35,7 @@ composable add compose postgresql
 ```
 
 This will:
+
 1. Fetch the `postgresql.yml` fragment.
-2. Store it in `./compose/postgresql.yml`.
+2. Store it in `./.compose/postgresql.yml`.
 3. Update your local `.env` file with default environment variables.
