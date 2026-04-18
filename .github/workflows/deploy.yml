@@ -31,11 +31,12 @@ jobs:
         run: npm install
 
       - name: Restore existing registry
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          path: .gh-pages
-        continue-on-error: true
+        run: |
+          if git ls-remote --exit-code --heads origin gh-pages; then
+            git clone --branch gh-pages --depth 1 https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git .gh-pages
+          else
+            echo "gh-pages branch not found, starting fresh."
+          fi
 
       - name: Merge registry content
         run: |
