@@ -2,7 +2,7 @@
   "name": "valkey",
   "description": "Valkey - The Redis-compatible in-memory data structure store",
   "variables": {
-    "VALKEY_VERSION": "9",
+    "VALKEY_VERSION": "9.0.3",
     "VALKEY_PORT": "6379"
   },
   "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",

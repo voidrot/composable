@@ -2,7 +2,7 @@
   "name": "redis",
   "description": "Redis key-value store",
   "variables": {
-    "REDIS_VERSION": "8",
+    "REDIS_VERSION": "8.4.2",
     "REDIS_PORT": "6379"
   },
   "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",

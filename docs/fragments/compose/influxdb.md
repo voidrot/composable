@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `INFLUXDB_VERSION` | `2` | | 
+| `INFLUXDB_VERSION` | `2.8.0` | | 
 | `INFLUXDB_PORT` | `8086` | | 
 | `INFLUXDB_ADMIN_USER` | `admin` | | 
 | `INFLUXDB_ADMIN_PASSWORD` | `adminpassword` | | 

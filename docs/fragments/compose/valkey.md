@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `VALKEY_VERSION` | `9` | | 
+| `VALKEY_VERSION` | `9.0.3` | | 
 | `VALKEY_PORT` | `6379` | | 
 
 ## Environment File

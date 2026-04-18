@@ -2,7 +2,7 @@
   "name": "influxdb",
   "description": "InfluxDB time series database",
   "variables": {
-    "INFLUXDB_VERSION": "2",
+    "INFLUXDB_VERSION": "2.8.0",
     "INFLUXDB_PORT": "8086",
     "INFLUXDB_ADMIN_USER": "admin",
     "INFLUXDB_ADMIN_PASSWORD": "adminpassword",

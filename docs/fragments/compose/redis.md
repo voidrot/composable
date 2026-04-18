@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `REDIS_VERSION` | `8` | | 
+| `REDIS_VERSION` | `8.4.2` | | 
 | `REDIS_PORT` | `6379` | | 
 
 ## Environment File

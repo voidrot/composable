@@ -2,7 +2,7 @@
   "name": "rabbitmq",
   "description": "RabbitMQ message broker with Management UI enabled",
   "variables": {
-    "RABBITMQ_VERSION": "4-management-alpine",
+    "RABBITMQ_VERSION": "4.2.5-management-alpine",
     "RABBITMQ_AMQP_PORT": "5672",
     "RABBITMQ_UI_PORT": "15672",
     "RABBITMQ_USER": "guest",

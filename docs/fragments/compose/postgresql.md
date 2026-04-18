@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `POSTGRES_VERSION` | `18` | | 
+| `POSTGRES_VERSION` | `18.3` | | 
 | `POSTGRES_USER` | `postgres` | | 
 | `POSTGRES_PASSWORD` | `postgres` | | 
 | `POSTGRES_DB` | `postgres` | | 

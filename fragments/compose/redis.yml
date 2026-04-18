@@ -1,6 +1,6 @@
 services:
   redis:
-    image: redis:${REDIS_VERSION:-8}
+    image: redis:${REDIS_VERSION:-8.4.2}
     command: redis-server --save 60 1 --loglevel warning
     ports:
       - ${REDIS_PORT:-6379}:6379

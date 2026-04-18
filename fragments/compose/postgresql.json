@@ -2,7 +2,7 @@
   "name": "postgresql",
   "description": "PostgreSQL database service",
   "variables": {
-    "POSTGRES_VERSION": "18",
+    "POSTGRES_VERSION": "18.3",
     "POSTGRES_USER": "postgres",
     "POSTGRES_PASSWORD": "postgres",
     "POSTGRES_DB": "postgres",
