@@ -8,6 +8,7 @@ on:
       - 'fragments/**'
       - 'package.json'
       - 'src/registry/**'
+      - 'docs/**'
   workflow_dispatch:
 
 permissions:
