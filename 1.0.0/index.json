@@ -10,6 +10,20 @@
     },
     {
       "type": "compose",
+      "name": "traefik",
+      "description": "Traefik modern reverse proxy and load balancer",
+      "path": "compose/traefik.yml",
+      "metadataPath": "compose/traefik.json"
+    },
+    {
+      "type": "compose",
+      "name": "traefik-config",
+      "description": "",
+      "path": "compose/traefik-config.yml",
+      "metadataPath": "compose/traefik-config.json"
+    },
+    {
+      "type": "compose",
       "name": "redis",
       "description": "Redis key-value store",
       "path": "compose/redis.yml",
@@ -17,10 +31,66 @@
     },
     {
       "type": "compose",
+      "name": "rabbitmq",
+      "description": "RabbitMQ message broker with Management UI enabled",
+      "path": "compose/rabbitmq.yml",
+      "metadataPath": "compose/rabbitmq.json"
+    },
+    {
+      "type": "compose",
       "name": "postgresql",
       "description": "PostgreSQL database service",
       "path": "compose/postgresql.yml",
       "metadataPath": "compose/postgresql.json"
+    },
+    {
+      "type": "compose",
+      "name": "otel-collector",
+      "description": "OpenTelemetry Collector Contrib",
+      "path": "compose/otel-collector.yml",
+      "metadataPath": "compose/otel-collector.json"
+    },
+    {
+      "type": "compose",
+      "name": "nats",
+      "description": "NATS message broker with JetStream enabled",
+      "path": "compose/nats.yml",
+      "metadataPath": "compose/nats.json"
+    },
+    {
+      "type": "compose",
+      "name": "jaeger",
+      "description": "Jaeger distributed tracing system (all-in-one)",
+      "path": "compose/jaeger.yml",
+      "metadataPath": "compose/jaeger.json"
+    },
+    {
+      "type": "compose",
+      "name": "influxdb",
+      "description": "InfluxDB time series database",
+      "path": "compose/influxdb.yml",
+      "metadataPath": "compose/influxdb.json"
+    },
+    {
+      "type": "compose",
+      "name": "grafana",
+      "description": "Grafana observability and visualization platform",
+      "path": "compose/grafana.yml",
+      "metadataPath": "compose/grafana.json"
+    },
+    {
+      "type": "compose",
+      "name": "eclipse-mosquitto",
+      "description": "Eclipse Mosquitto MQTT broker",
+      "path": "compose/eclipse-mosquitto.yml",
+      "metadataPath": "compose/eclipse-mosquitto.json"
+    },
+    {
+      "type": "compose",
+      "name": "caddy",
+      "description": "Caddy web server with automatic HTTPS",
+      "path": "compose/caddy.yml",
+      "metadataPath": "compose/caddy.json"
     }
   ]
 }
