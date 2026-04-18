@@ -48,8 +48,7 @@ Key tools:
 6. Update any hardcoded tags in the corresponding `.yml` file.
 7. **Sync environment variable defaults**: If the version bump changes or adds any env vars (e.g. a new default port, a renamed config key), update the `defaults` in the `.json` `variables` field to reflect the current recommended values.
 8. Run `npm run validate` to ensure schemas are satisfied.
-9. Update frontmatter in any corresponding `docs/fragments/<name>.md` if it has a version field.
-
+9. Run `node scripts/generate-docs.js` to regenerate docs and update `mkdocs.yml`.
 
 ### Adding a New Fragment
 
