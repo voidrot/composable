@@ -56,8 +56,8 @@ program
         }
       }
 
-      // Copy to local compose directory
-      const targetDir = path.join(process.cwd(), 'compose');
+      // Copy to local .compose directory
+      const targetDir = path.join(process.cwd(), '.compose');
       await fs.ensureDir(targetDir);
       await fs.copy(localFragmentPath, path.join(targetDir, `${name}.yml`));
 
@@ -94,7 +94,7 @@ program
             const serviceName = item.key.value;
             servicesNode.set(serviceName, doc.createNode({
               extends: {
-                file: `compose/${name}.yml`,
+                file: `.compose/${name}.yml`,
                 service: serviceName
               }
             }));
@@ -133,7 +133,7 @@ program
         }
       }
 
-      console.log(`Successfully added ${name} to ./compose/${name}.yml`);
+      console.log(`Successfully added ${name} to ./.compose/${name}.yml`);
     } catch (error: any) {
       console.error(`Error adding fragment: ${error.message}`);
     }

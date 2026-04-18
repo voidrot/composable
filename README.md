@@ -31,7 +31,7 @@ composable add compose postgresql
 composable add compose redis --extend
 ```
 
-When you add a fragment, it will be downloaded into your `./compose` directory, and any required default environment variables will be automatically appended to your `.env` file.
+When you add a fragment, it will be downloaded into your `./.compose` directory, and any required default environment variables will be automatically appended to your `.env` file.
 
 ## Local Development
 
