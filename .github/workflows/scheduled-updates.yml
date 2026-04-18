@@ -44,6 +44,7 @@ jobs:
           fi
 
       - name: Create Copilot Update Issue
+        id: create_issue
         if: steps.check_changes.outputs.changed == 'true' || github.event.inputs.force_copilot == 'true'
         uses: actions/github-script@v7
         with:
@@ -58,7 +59,13 @@ jobs:
                 'X-GitHub-Api-Version': '2022-11-28'
               }
             });
-
-
-
             console.log(`Created issue ${issue.data.number}`);
+            return issue.data.number;
+
+      - name: Assign @copilot
+        if: steps.create_issue.outputs.result
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+        run: |
+          gh issue edit ${{ steps.create_issue.outputs.result }} --add-assignee "copilot"
+
