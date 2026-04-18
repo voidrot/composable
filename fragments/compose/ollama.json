@@ -1,0 +1,11 @@
+{
+  "name": "ollama",
+  "description": "Get up and running with large language models.",
+  "variables": {
+    "OLLAMA_VERSION": "latest",
+    "OLLAMA_PORT": "11434",
+    "OLLAMA_KEEP_ALIVE": "5m",
+    "OLLAMA_FLASH_ATTENTION": "1",
+    "OLLAMA_KV_CACHE_TYPE": "q8_0"
+  }
+}

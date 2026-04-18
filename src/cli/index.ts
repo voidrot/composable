@@ -49,6 +49,16 @@ program
     "-e, --extend",
     "Add the service directly to an existing compose.yml using extends syntax",
   )
+  .option(
+    "--gpu [driver]",
+    "Specify the GPU driver type",
+    "nvidia",
+  )
+  .option(
+    "--gpu-count [count]",
+    "Specify the GPU count",
+    "all",
+  )
   .action(async (type, name, options) => {
     try {
       await ensureCacheDir();
@@ -154,9 +164,21 @@ program
       }
 
       // Handle configs and variables
-      if (await fs.pathExists(localMetadataPath)) {
-        const metadata = await fs.readJson(localMetadataPath);
+      const fragmentContentForGpu = await fs.readFile(localFragmentPath, "utf-8");
+      const hasGpu = fragmentContentForGpu.includes("GPU_DRIVER") || fragmentContentForGpu.includes("GPU_COUNT");
 
+      let metadata: any = {};
+      if (await fs.pathExists(localMetadataPath)) {
+        metadata = await fs.readJson(localMetadataPath);
+      }
+
+      if (hasGpu) {
+        metadata.variables = metadata.variables || {};
+        metadata.variables["GPU_DRIVER"] = options.gpu;
+        metadata.variables["GPU_COUNT"] = options.gpuCount;
+      }
+
+      if (metadata.configs || metadata.variables) {
         if (metadata.configs && Array.isArray(metadata.configs)) {
           for (const config of metadata.configs) {
             if (config.source && config.target) {
