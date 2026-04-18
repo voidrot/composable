@@ -5,7 +5,6 @@ theme:
     scheme: slate
     primary: indigo
     accent: indigo
-
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
@@ -19,26 +18,27 @@ nav:
   - Fragments:
       - Overview: fragments/index.md
       - Compose:
-          - django: fragments/compose/django.md
+          - arcadedb: fragments/compose/arcadedb.md
+          - caddy: fragments/compose/caddy.md
           - celery: fragments/compose/celery.md
           - celery-beat: fragments/compose/celery-beat.md
           - celery-flower: fragments/compose/celery-flower.md
-          - postgresql: fragments/compose/postgresql.md
-          - redis: fragments/compose/redis.md
-          - valkey: fragments/compose/valkey.md
-          - rabbitmq: fragments/compose/rabbitmq.md
-          - nats: fragments/compose/nats.md
-          - mosquitto: fragments/compose/eclipse-mosquitto.md
-          - ollama: fragments/compose/ollama.md
-          - vllm: fragments/compose/vllm.md
-          - traefik: fragments/compose/traefik.md
-          - traefik-config: fragments/compose/traefik-config.md
-          - caddy: fragments/compose/caddy.md
           - chromadb: fragments/compose/chromadb.md
-          - arcadedb: fragments/compose/arcadedb.md
+          - django: fragments/compose/django.md
+          - eclipse-mosquitto: fragments/compose/eclipse-mosquitto.md
           - grafana: fragments/compose/grafana.md
           - influxdb: fragments/compose/influxdb.md
           - jaeger: fragments/compose/jaeger.md
+          - nats: fragments/compose/nats.md
+          - ollama: fragments/compose/ollama.md
           - otel-collector: fragments/compose/otel-collector.md
-  - Stacks: stacks/index.md
-
+          - postgresql: fragments/compose/postgresql.md
+          - rabbitmq: fragments/compose/rabbitmq.md
+          - redis: fragments/compose/redis.md
+          - traefik: fragments/compose/traefik.md
+          - traefik-config: fragments/compose/traefik-config.md
+          - valkey: fragments/compose/valkey.md
+          - vllm: fragments/compose/vllm.md
+  - Stacks:
+      - Overview: stacks/index.md
+      - django-base: stacks/django-base.md
