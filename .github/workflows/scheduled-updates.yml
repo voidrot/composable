@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: '0 0 * * 0' # Run weekly on Sunday
   workflow_dispatch:
+    inputs:
+      force_copilot:
+        description: 'Force creation of the Copilot update issue even if no image changes are detected'
+        type: boolean
+        default: false
+
 
 permissions:
   contents: write
@@ -38,7 +44,7 @@ jobs:
           fi
 
       - name: Create Copilot Update Issue
-        if: steps.check_changes.outputs.changed == 'true'
+        if: steps.check_changes.outputs.changed == 'true' || github.event.inputs.force_copilot == 'true'
         uses: actions/github-script@v7
         with:
           script: |
