@@ -1,19 +1,21 @@
 # Composable
 
-A structured, reusable library of Docker Compose configuration snippets and a streamlined command-line interface to manage them efficiently.
+A powerful, modular library of Docker Compose configuration fragments and a streamlined CLI to orchestrate them.
 
 ## Overview
 
-Composable provides a centralized registry for useful Docker Compose "fragments" (like PostgreSQL, Redis, and Valkey) that you can quickly add to your projects. Instead of copying and pasting Docker Compose configurations from previous projects or tutorials, you can use the Composable CLI to fetch, combine, and configure them automatically.
+Composable eliminates the "copy-paste" cycle of Docker development. It provides a centralized registry of verified "fragments" (like PostgreSQL, Redis, Django, and Celery) that you can instantly inject into your project. Use it to build clean, maintainable, and highly reproducible development environments.
 
-## Features
+## ✨ Features
 
-- **Fragment Library**: High-quality, customizable Docker Compose configurations for common services.
-- **CLI Tool**: Easily search and add fragments directly from your terminal.
-- **Environment Variable Integration**: Automatically merges necessary default `.env` variables for added services.
-- **GitHub Pages Registry**: A built-in system to deploy your fragment registry statically via GitHub Pages.
+- **🧱 Fragment Library**: High-quality, schema-validated Docker Compose snippets for common services.
+- **📦 Pre-configured Stacks**: Initialize entire application ecosystems (e.g., `django-base`) with a single command.
+- **🔄 Smart Build & Watch**: Automatically injects build contexts and Docker Compose `watch` configurations for hot-reloading.
+- **🛡️ Environment Isolation**: Keeps your primary `.env` clean by routing service-specific variables to `.env.compose`.
+- **🌍 Global Configuration**: Set organization-wide or personal defaults in `~/.composable/config.yml`.
+- **📜 JSON Schema Validation**: Strict schema enforcement for both fragments and stacks to ensure stability.
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Install from npm
 
@@ -23,69 +25,67 @@ npm install -g @voidrot/composable
 
 ### Using the CLI
 
-You can use the CLI to interact with the registry. For example:
-
+#### Search the Registry
 ```bash
-# Search the registry for available fragments
+# List all available fragments
 composable search
+
+# Search for a specific service
 composable search postgresql
-
-# Add a fragment to your project
-composable add compose postgresql
-
-# Add a fragment and automatically extend it in your compose.yml
-composable add compose redis --extend
 ```
 
-When you add a fragment, it will be downloaded into your `./.compose` directory, and any required default environment variables will be automatically appended to your `.env` file.
+#### Add a Fragment
+```bash
+# Add postgresql and link it to your project
+composable add compose postgresql --extend
+```
 
-## Local Development
+#### Initialize a Stack
+```bash
+# Set up a complete Django + Postgres + Celery stack
+composable stack init django-base
+```
 
-If you are developing this tool locally:
+## ⚙️ Configuration
+
+You can customize Composable globally by creating a config file at `~/.composable/config.yml`:
+
+```yaml
+registries:
+  - name: default
+    url: https://voidrot.github.io/composable/latest
+defaults:
+  env_file: true
+  build: true
+  watch: true
+```
+
+## 🛠️ Local Development
 
 ```bash
 # Install dependencies
 npm install
 
-# Build the CLI package
+# Build the CLI
 npm run build
 
-# Build the local registry files (generates the /registry directory)
-npm run build:registry
+# Validate all fragments and stacks against schemas
+npm run validate
 
-# Run the CLI locally
-npx tsx src/cli/index.ts search
+# Run the local CLI
+npx tsx src/cli/index.ts --help
 ```
 
-## Releases
+## 📖 Documentation
 
-Releases are automated with Release Please and Conventional Commits.
+For detailed information on commands, fragments, and stacks, visit our documentation site:
+**[https://voidrot.github.io/composable/latest/docs/](https://voidrot.github.io/composable/latest/docs/)**
 
-- Merge commits like `feat: ...`, `fix: ...`, and `feat!: ...` into `main`.
-- Release Please opens or updates a release PR with version bumps and changelog updates.
-- Publishing to npm runs when a GitHub release is published.
+## 🤝 Contributing
 
-For publish-on-release automation to trigger, configure a token with permission to create releases for the Release Please workflow (for example, `RELEASE_PLEASE_TOKEN`).
+1. **Add a Fragment**: Place a `.yml` file in `fragments/compose/` and run `npm run validate`.
+2. **Define a Stack**: Create a `.json` file in `stacks/` using the stack schema.
+3. **Update Docs**: Run `node scripts/generate-docs.js` to refresh the documentation and navigation.
 
-## Adding New Fragments
+Releases are automated with **Release Please**. Use [Conventional Commits](https://www.conventionalcommits.org/) to trigger version bumps.
 
-1. Create a `.yml` file in the `fragments/compose/` directory (e.g., `my-service.yml`).
-2. Run the metadata generator to create the accompanying `.json` file:
-
-   ```bash
-   npx tsx src/cli/index.ts init-metadata fragments/compose/my-service.yml
-   ```
-
-3. Open the generated `.json` file, add a description, and verify the detected variables.
-4. Commit and push your changes. The GitHub Actions workflow will automatically rebuild the registry and deploy it.
-
-## Registry Deployment
-
-This repository is configured to automatically deploy its registry using GitHub Actions and GitHub Pages.
-
-Whenever changes are pushed to the `main` branch, the `deploy.yml` workflow:
-
-1. Restores the previously deployed registry state.
-2. Builds and appends the new fragments.
-3. Syncs the registry data back to the `gh-pages` branch for persistence.
-4. Deploys the result to GitHub Pages, where it acts as the backend for the CLI.
