@@ -2,7 +2,7 @@
   "name": "vllm",
   "description": "High-throughput and memory-efficient LLM inference and serving engine.",
   "variables": {
-    "VLLM_VERSION": "latest",
+    "VLLM_VERSION": "v0.19.1",
     "VLLM_PORT": "8000",
     "VLLM_MODEL": "mistralai/Mistral-7B-v0.1"
   },

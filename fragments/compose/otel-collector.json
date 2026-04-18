@@ -2,7 +2,7 @@
   "name": "otel-collector",
   "description": "OpenTelemetry Collector Contrib",
   "variables": {
-    "OTEL_VERSION": "latest",
+    "OTEL_VERSION": "0.150.1",
     "OTEL_RECEIVER_GRPC_PORT": "4317",
     "OTEL_RECEIVER_HTTP_PORT": "4318",
     "OTEL_METRICS_PORT": "8888",

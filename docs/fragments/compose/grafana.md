@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `GRAFANA_VERSION` | `latest` | | 
+| `GRAFANA_VERSION` | `13.0` | | 
 | `GRAFANA_PORT` | `3000` | | 
 | `GRAFANA_ADMIN_PASSWORD` | `admin` | | 
 

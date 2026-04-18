@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `NATS_VERSION` | `latest` | | 
+| `NATS_VERSION` | `2-alpine` | | 
 | `NATS_CLIENT_PORT` | `4222` | | 
 | `NATS_MONITORING_PORT` | `8222` | | 
 | `NATS_CLUSTER_PORT` | `6222` | | 

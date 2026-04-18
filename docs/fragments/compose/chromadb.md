@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `CHROMA_VERSION` | `latest` | | 
+| `CHROMA_VERSION` | `1.5.8` | | 
 | `CHROMA_PORT` | `8000` | | 
 | `CHROMA_PERSIST_DIRECTORY` | `/chroma/chroma` | | 
 | `CHROMA_TELEMETRY` | `FALSE` | | 

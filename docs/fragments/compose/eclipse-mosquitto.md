@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `MOSQUITTO_VERSION` | `latest` | | 
+| `MOSQUITTO_VERSION` | `2` | | 
 | `MOSQUITTO_MQTT_PORT` | `1883` | | 
 | `MOSQUITTO_WS_PORT` | `9001` | | 
 
