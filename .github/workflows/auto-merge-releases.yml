@@ -20,7 +20,7 @@ jobs:
       - name: Auto-merge release-please PRs
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.RELEASE_PLEASE_TOKEN}}
         run: |
           # Note: We rely on GitHub branch protections/status checks passing before the merge actually occurs
           gh pr review --approve "$PR_URL"
