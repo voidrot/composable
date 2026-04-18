@@ -1,32 +1,32 @@
 #!/usr/bin/env node
 
-import { Command } from 'commander';
-import fs from 'fs-extra';
-import * as path from 'path';
-import * as os from 'os';
-import * as dotenv from 'dotenv';
-import yaml from 'yaml';
-import { fileURLToPath } from 'node:url';
+import { Command } from "commander";
+import fs from "fs-extra";
+import * as path from "path";
+import * as os from "os";
+import * as dotenv from "dotenv";
+import yaml from "yaml";
+import { fileURLToPath } from "node:url";
 
 const program = new Command();
-const CACHE_DIR = path.join(os.homedir(), '.composable', 'fragments');
-const REGISTRY_URL = 'https://voidrot.github.io/composable/latest';
+const CACHE_DIR = path.join(os.homedir(), ".composable", "fragments");
+const REGISTRY_URL = "https://voidrot.github.io/composable/latest";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const PACKAGE_JSON_PATH = path.resolve(__dirname, '../../package.json');
+const PACKAGE_JSON_PATH = path.resolve(__dirname, "../../package.json");
 
 function getCliVersion(): string {
   try {
     const pkg = fs.readJsonSync(PACKAGE_JSON_PATH) as { version?: string };
-    return pkg.version ?? '0.1.0';
+    return pkg.version ?? "0.1.0";
   } catch {
-    return '0.1.0';
+    return "0.1.0";
   }
 }
 
 program
-  .name('composable')
-  .description('Manage Docker Compose fragments')
+  .name("composable")
+  .description("Manage Docker Compose fragments")
   .version(getCliVersion());
 
 async function ensureCacheDir() {
@@ -43,9 +43,12 @@ async function fetchFromRegistry(filePath: string) {
 }
 
 program
-  .command('add <type> <name>')
-  .description('Add a fragment to your project')
-  .option('-e, --extend', 'Add the service directly to an existing compose.yml using extends syntax')
+  .command("add <type> <name>")
+  .description("Add a fragment to your project")
+  .option(
+    "-e, --extend",
+    "Add the service directly to an existing compose.yml using extends syntax",
+  )
   .action(async (type, name, options) => {
     try {
       await ensureCacheDir();
@@ -55,14 +58,14 @@ program
       const localMetadataPath = path.join(CACHE_DIR, metadataPath);
 
       // Check cache or fetch
-      if (!await fs.pathExists(localFragmentPath)) {
+      if (!(await fs.pathExists(localFragmentPath))) {
         console.log(`Fetching ${name}...`);
         const content = await fetchFromRegistry(fragmentPath);
         await fs.ensureDir(path.dirname(localFragmentPath));
         await fs.writeFile(localFragmentPath, content);
       }
 
-      if (!await fs.pathExists(localMetadataPath)) {
+      if (!(await fs.pathExists(localMetadataPath))) {
         try {
           const metadataContent = await fetchFromRegistry(metadataPath);
           await fs.writeFile(localMetadataPath, metadataContent);
@@ -72,73 +75,93 @@ program
       }
 
       // Copy to local .compose directory
-      const targetDir = path.join(process.cwd(), '.compose');
+      const targetDir = path.join(process.cwd(), ".compose");
       await fs.ensureDir(targetDir);
       await fs.copy(localFragmentPath, path.join(targetDir, `${name}.yml`));
 
       if (options.extend) {
-        const composeFiles = ['compose.yml', 'compose.yaml', 'docker-compose.yml', 'docker-compose.yaml'];
-        let composePath = '';
+        const composeFiles = [
+          "compose.yml",
+          "compose.yaml",
+          "docker-compose.yml",
+          "docker-compose.yaml",
+        ];
+        let composePath = "";
         for (const file of composeFiles) {
           if (await fs.pathExists(path.join(process.cwd(), file))) {
             composePath = path.join(process.cwd(), file);
             break;
           }
         }
-        
+
         if (!composePath) {
-          composePath = path.join(process.cwd(), 'compose.yml');
-          await fs.writeFile(composePath, 'services:\n');
+          composePath = path.join(process.cwd(), "compose.yml");
+          await fs.writeFile(composePath, "services:\n");
         }
 
-        const composeContent = await fs.readFile(composePath, 'utf-8');
+        const composeContent = await fs.readFile(composePath, "utf-8");
         const doc = yaml.parseDocument(composeContent);
-        
-        const fragmentContent = await fs.readFile(localFragmentPath, 'utf-8');
+
+        const fragmentContent = await fs.readFile(localFragmentPath, "utf-8");
         const fragmentDoc = yaml.parseDocument(fragmentContent);
-        
-        let servicesNode = doc.get('services') as any;
+
+        let servicesNode = doc.get("services") as any;
         if (!servicesNode) {
           servicesNode = doc.createNode({});
-          doc.set('services', servicesNode);
+          doc.set("services", servicesNode);
         }
-        const fragmentServices = fragmentDoc.get('services') as any;
+        const fragmentServices = fragmentDoc.get("services") as any;
 
         if (fragmentServices && fragmentServices.items) {
           for (const item of fragmentServices.items) {
             const serviceName = item.key.value;
-            servicesNode.set(serviceName, doc.createNode({
-              extends: {
-                file: `.compose/${name}.yml`,
-                service: serviceName
-              }
-            }));
+            servicesNode.set(
+              serviceName,
+              doc.createNode({
+                extends: {
+                  file: `.compose/${name}.yml`,
+                  service: serviceName,
+                },
+              }),
+            );
           }
         }
 
         await fs.writeFile(composePath, doc.toString());
-        console.log(`Added service to ${path.basename(composePath)} using extends`);
+        console.log(
+          `Added service to ${path.basename(composePath)} using extends`,
+        );
       }
 
       // Handle configs and variables
       if (await fs.pathExists(localMetadataPath)) {
         const metadata = await fs.readJson(localMetadataPath);
-        
+
         if (metadata.configs && Array.isArray(metadata.configs)) {
           for (const config of metadata.configs) {
             if (config.source && config.target) {
               const configRegistryPath = path.join(type, config.source);
-              const localConfigCachePath = path.join(CACHE_DIR, configRegistryPath);
-              const targetConfigPath = path.join(process.cwd(), '.compose', config.target);
+              const localConfigCachePath = path.join(
+                CACHE_DIR,
+                configRegistryPath,
+              );
+              const targetConfigPath = path.join(
+                process.cwd(),
+                ".compose",
+                config.target,
+              );
 
-              if (!await fs.pathExists(localConfigCachePath)) {
+              if (!(await fs.pathExists(localConfigCachePath))) {
                 try {
                   console.log(`Fetching config ${config.source}...`);
-                  const configContent = await fetchFromRegistry(configRegistryPath);
+                  const configContent =
+                    await fetchFromRegistry(configRegistryPath);
                   await fs.ensureDir(path.dirname(localConfigCachePath));
                   await fs.writeFile(localConfigCachePath, configContent);
                 } catch (e: any) {
-                  console.warn(`Failed to fetch config ${config.source}: ${e.message}`);
+                  console.warn(
+                    `Failed to fetch config ${config.source}: ${e.message}`,
+                  );
                 }
               }
 
@@ -152,16 +175,16 @@ program
         }
 
         if (metadata.variables) {
-          const envPath = path.join(process.cwd(), '.env');
-          let envContent = '';
+          const envPath = path.join(process.cwd(), ".env");
+          let envContent = "";
           if (await fs.pathExists(envPath)) {
-            envContent = await fs.readFile(envPath, 'utf-8');
+            envContent = await fs.readFile(envPath, "utf-8");
           }
 
           const existingVars = dotenv.parse(envContent);
           let updated = false;
-          let newLines = '\n# Composable variables for ' + name + '\n';
-          
+          let newLines = "\n# Composable variables for " + name + "\n";
+
           for (const [key, value] of Object.entries(metadata.variables)) {
             if (!(key in existingVars)) {
               newLines += `${key}=${value}\n`;
@@ -183,41 +206,44 @@ program
   });
 
 program
-  .command('search [query]')
-  .description('Search for fragments')
+  .command("search [query]")
+  .description("Search for fragments")
   .action(async (query) => {
     try {
-      console.log('Fetching index...');
-      const indexStr = await fetchFromRegistry('index.json');
+      console.log("Fetching index...");
+      const indexStr = await fetchFromRegistry("index.json");
       const index = JSON.parse(indexStr);
-      
-      const results = index.fragments.filter((f: any) => 
-        !query || 
-        f.name.includes(query) || 
-        f.type.includes(query) || 
-        f.description.includes(query)
+
+      const results = index.fragments.filter(
+        (f: any) =>
+          !query ||
+          f.name.includes(query) ||
+          f.type.includes(query) ||
+          f.description.includes(query),
       );
 
-      console.table(results.map((r: any) => ({
-        Type: r.type,
-        Name: r.name,
-        Description: r.description
-      })));
+      console.table(
+        results.map((r: any) => ({
+          Type: r.type,
+          Name: r.name,
+          Description: r.description,
+        })),
+      );
     } catch (error: any) {
       console.error(`Error searching: ${error.message}`);
     }
   });
 
 program
-  .command('cache')
-  .option('--all', 'Cache all fragments')
-  .description('Manage local cache')
+  .command("cache")
+  .option("--all", "Cache all fragments")
+  .description("Manage local cache")
   .action(async (options) => {
     if (options.all) {
       try {
         await ensureCacheDir();
-        console.log('Fetching index...');
-        const indexStr = await fetchFromRegistry('index.json');
+        console.log("Fetching index...");
+        const indexStr = await fetchFromRegistry("index.json");
         const index = JSON.parse(indexStr);
 
         for (const f of index.fragments) {
@@ -246,7 +272,7 @@ program
             }
           } catch (e) {}
         }
-        console.log('All fragments cached successfully.');
+        console.log("All fragments cached successfully.");
       } catch (error: any) {
         console.error(`Error caching all: ${error.message}`);
       }
@@ -254,12 +280,12 @@ program
   });
 
 program
-  .command('update')
-  .description('Update cached fragments from registry')
+  .command("update")
+  .description("Update cached fragments from registry")
   .action(async () => {
     // Similar to cache --all but overwrites
-    console.log('Updating cache...');
-    const indexStr = await fetchFromRegistry('index.json');
+    console.log("Updating cache...");
+    const indexStr = await fetchFromRegistry("index.json");
     const index = JSON.parse(indexStr);
     for (const f of index.fragments) {
       console.log(`Updating ${f.name}...`);
@@ -284,36 +310,36 @@ program
         }
       } catch (e) {}
     }
-    console.log('Cache updated.');
+    console.log("Cache updated.");
   });
 
 program
-  .command('init-metadata <ymlPath>')
-  .description('Initialize metadata for a local fragment (developer tool)')
+  .command("init-metadata <ymlPath>")
+  .description("Initialize metadata for a local fragment (developer tool)")
   .action(async (ymlPath) => {
     try {
-      if (!await fs.pathExists(ymlPath)) {
+      if (!(await fs.pathExists(ymlPath))) {
         throw new Error(`File not found: ${ymlPath}`);
       }
-      const content = await fs.readFile(ymlPath, 'utf-8');
+      const content = await fs.readFile(ymlPath, "utf-8");
       const varRegex = /\${([A-Z0-9_]+)(?::-([^}]+))?}/g;
       const vars: Record<string, string> = {};
       let match;
       while ((match = varRegex.exec(content)) !== null) {
         const key = match[1];
         if (key) {
-          vars[key] = match[2] || '';
+          vars[key] = match[2] || "";
         }
       }
 
       const dir = path.dirname(ymlPath);
-      const name = path.basename(ymlPath, '.yml');
+      const name = path.basename(ymlPath, ".yml");
       const metadataPath = path.join(dir, `${name}.json`);
 
       const metadata = {
         name,
-        description: '',
-        variables: vars
+        description: "",
+        variables: vars,
       };
 
       await fs.writeJson(metadataPath, metadata, { spaces: 2 });
