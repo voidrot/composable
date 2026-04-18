@@ -28,9 +28,14 @@
     "type": "git",
     "url": "git+https://github.com/voidrot/composable.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "docker",
+    "docker-compose",
+    "cli",
+    "fragments"
+  ],
+  "author": "Voidrot",
+  "license": "MIT",
   "type": "module",
   "bugs": {
     "url": "https://github.com/voidrot/composable/issues"
