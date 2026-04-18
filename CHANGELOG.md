@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/voidrot/composable/compare/composable-v0.2.0...composable-v0.3.0) (2026-04-18)
+
+
+### Features
+
+* add LICENSE file and update package.json with author, license, and keywords ([237c5f5](https://github.com/voidrot/composable/commit/237c5f5ce176cd6190b16f1f6eeed5d554a55a04))
+
 ## [0.2.0](https://github.com/voidrot/composable/compare/composable-v0.1.0...composable-v0.2.0) (2026-04-18)
 
 
