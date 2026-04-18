@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/voidrot/composable/compare/composable-v0.5.1...composable-v0.6.0) (2026-04-18)
+
+
+### Features
+
+* add upgrade command to refresh installed project fragments from registry ([c32b92d](https://github.com/voidrot/composable/commit/c32b92d36220dd11c9aeac086aef28526d33e6ce))
+
 ## [0.5.1](https://github.com/voidrot/composable/compare/composable-v0.5.0...composable-v0.5.1) (2026-04-18)
 
 
