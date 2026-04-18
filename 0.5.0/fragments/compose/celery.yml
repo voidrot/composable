@@ -1,0 +1,7 @@
+services:
+  celery:
+    image: python:3.14
+    command: celery -A core worker -l INFO
+    volumes:
+      - .:/app
+    working_dir: /app
