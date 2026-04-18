@@ -2,7 +2,7 @@
   "name": "traefik",
   "description": "Traefik modern reverse proxy and load balancer",
   "variables": {
-    "TRAEFIK_VERSION": "v3.0",
+    "TRAEFIK_VERSION": "v3.3",
     "TRAEFIK_HTTP_PORT": "80",
     "TRAEFIK_HTTPS_PORT": "443",
     "TRAEFIK_DASHBOARD_PORT": "8080"
