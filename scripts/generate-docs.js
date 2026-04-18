@@ -64,9 +64,71 @@ The following environment variables can be configured:
     }
 
     await updateIndex(fragmentFiles);
+    await generateStackDocs();
+}
+
+async function generateStackDocs() {
+    const stackFiles = await glob('stacks/*.json');
+    const stacks = [];
+
+    for (const file of stackFiles) {
+        const stack = await fs.readJson(file);
+        stacks.push(stack);
+
+        const date = new Date().toISOString().split('T')[0];
+        let docContent = `---
+title: ${stack.name}
+description: ${stack.description || 'A composable stack'}
+tags:
+  - stack
+last_updated: ${date}
+---
+
+# ${stack.name}
+
+${stack.description || 'No description provided.'}
+
+## Components
+
+`;
+
+        for (const fragment of stack.fragments) {
+            docContent += `- [${fragment.name}](../fragments/compose/${fragment.name}.md)\n`;
+        }
+
+        const outPath = path.join('docs', 'stacks', `${stack.name}.md`);
+        await fs.writeFile(outPath, docContent);
+        console.log(`Generated ${outPath}`);
+    }
+
+    await updateStacksIndex(stacks);
+}
+
+async function updateStacksIndex(stacks) {
+    let indexContent = `## Available Stacks\n\n`;
+
+    for (const stack of stacks) {
+        indexContent += `### [${stack.name}](${stack.name}.md)\n\n`;
+        indexContent += `${stack.description}\n\n`;
+        indexContent += `- **Components**:\n`;
+        for (const fragment of stack.fragments) {
+            indexContent += `    - [${fragment.name}](../fragments/compose/${fragment.name}.md)\n`;
+        }
+        indexContent += `\n`;
+    }
+
+    const indexPath = path.join('docs', 'stacks', 'index.md');
+    const currentContent = await fs.readFile(indexPath, 'utf-8');
+    
+    const marker = '## Available Stacks';
+    const beforeMarker = currentContent.split(marker)[0];
+    
+    await fs.writeFile(indexPath, beforeMarker + indexContent);
+    console.log(`Updated ${indexPath}`);
 }
 
 async function updateIndex(fragmentFiles) {
+
     const categories = {
         "Databases & Caching": ["postgresql", "redis", "valkey", "chromadb", "arcadedb"],
         "Message Brokers": ["rabbitmq", "nats", "eclipse-mosquitto"],
