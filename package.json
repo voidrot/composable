@@ -20,6 +20,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "build:registry": "tsx src/registry/build.ts",
+    "validate": "tsx scripts/validate.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "prepublishOnly": "npm run build && npm run typecheck && npm test"
@@ -55,6 +56,8 @@
     "@types/fs-extra": "^11.0.4",
     "@types/glob": "^8.1.0",
     "@types/node": "^25.6.0",
+    "ajv": "^8.18.0",
+    "ajv-formats": "^3.0.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
