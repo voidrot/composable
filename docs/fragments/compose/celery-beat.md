@@ -1,15 +1,15 @@
 ---
-title: traefik-config
-description: A composable fragment
+title: celery-beat
+description: Celery beat scheduler for Django
 tags:
   - compose
   - fragment
 last_updated: 2026-04-18
 ---
 
-# traefik-config
+# celery-beat
 
-No description provided.
+Celery beat scheduler for Django
 
 ## Variables
 
@@ -19,3 +19,11 @@ The following environment variables can be configured:
 |----------|---------------|-------------|
 
 No environment variables are required.
+
+## Build
+
+This fragment supports building from source.
+
+## Watch
+
+This fragment supports live-syncing code with `docker compose watch`.

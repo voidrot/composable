@@ -20,3 +20,7 @@ The following environment variables can be configured:
 | `GRAFANA_VERSION` | `latest` | | 
 | `GRAFANA_PORT` | `3000` | | 
 | `GRAFANA_ADMIN_PASSWORD` | `admin` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

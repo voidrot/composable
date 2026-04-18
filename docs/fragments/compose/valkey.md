@@ -19,3 +19,7 @@ The following environment variables can be configured:
 |----------|---------------|-------------|
 | `VALKEY_VERSION` | `9` | | 
 | `VALKEY_PORT` | `6379` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

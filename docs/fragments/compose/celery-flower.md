@@ -1,15 +1,15 @@
 ---
-title: vllm
-description: High-throughput and memory-efficient LLM inference and serving engine.
+title: celery-flower
+description: Celery Flower monitor for Django
 tags:
   - compose
   - fragment
 last_updated: 2026-04-18
 ---
 
-# vllm
+# celery-flower
 
-High-throughput and memory-efficient LLM inference and serving engine.
+Celery Flower monitor for Django
 
 ## Variables
 
@@ -17,9 +17,15 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `VLLM_VERSION` | `latest` | | 
-| `VLLM_PORT` | `8000` | | 
-| `VLLM_MODEL` | `mistralai/Mistral-7B-v0.1` | | 
+| `FLOWER_PORT` | `5555` | | 
+
+## Build
+
+This fragment supports building from source.
+
+## Watch
+
+This fragment supports live-syncing code with `docker compose watch`.
 
 ## Environment File
 

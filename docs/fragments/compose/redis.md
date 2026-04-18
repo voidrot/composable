@@ -19,3 +19,7 @@ The following environment variables can be configured:
 |----------|---------------|-------------|
 | `REDIS_VERSION` | `8` | | 
 | `REDIS_PORT` | `6379` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

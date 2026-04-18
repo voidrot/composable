@@ -17,13 +17,14 @@ The schema defines standard fields such as `name`, `description`, `variables`, a
 
 ## Available Compose Fragments
 
-- **Databases & Caching**: `postgresql`, `redis`, `valkey`, `chromadb`, `arcadedb`
-- **Message Brokers**: `rabbitmq`, `nats`, `eclipse-mosquitto`
-- **AI / ML**: `ollama`, `vllm`
-- **Web & Routing**: `traefik`, `caddy`
-- **Observability**: `grafana`, `influxdb`, `jaeger`, `otel-collector`
+- **Databases & Caching**: [postgresql](compose/postgresql.md), [redis](compose/redis.md), [valkey](compose/valkey.md), [chromadb](compose/chromadb.md), [arcadedb](compose/arcadedb.md)
+- **Message Brokers**: [rabbitmq](compose/rabbitmq.md), [nats](compose/nats.md), [eclipse-mosquitto](compose/eclipse-mosquitto.md)
+- **AI / ML**: [ollama](compose/ollama.md), [vllm](compose/vllm.md)
+- **Web & Routing**: [traefik](compose/traefik.md), [caddy](compose/caddy.md)
+- **Observability**: [grafana](compose/grafana.md), [influxdb](compose/influxdb.md), [jaeger](compose/jaeger.md), [otel-collector](compose/otel-collector.md)
 - **Application Frameworks**:
-  - `django`
-  - `celery`
-  - `celery-beat`
-  - `celery-flower`
+  - [django](compose/django.md)
+  - [celery](compose/celery.md)
+  - [celery-beat](compose/celery-beat.md)
+  - [celery-flower](compose/celery-flower.md)
+

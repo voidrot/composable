@@ -21,3 +21,7 @@ The following environment variables can be configured:
 | `CHROMA_PORT` | `8000` | | 
 | `CHROMA_PERSIST_DIRECTORY` | `/chroma/chroma` | | 
 | `CHROMA_TELEMETRY` | `FALSE` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.

@@ -12,3 +12,31 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Commands: commands.md
+  - Fragments:
+      - Overview: fragments/index.md
+      - Compose:
+          - django: fragments/compose/django.md
+          - celery: fragments/compose/celery.md
+          - celery-beat: fragments/compose/celery-beat.md
+          - celery-flower: fragments/compose/celery-flower.md
+          - postgresql: fragments/compose/postgresql.md
+          - redis: fragments/compose/redis.md
+          - valkey: fragments/compose/valkey.md
+          - rabbitmq: fragments/compose/rabbitmq.md
+          - nats: fragments/compose/nats.md
+          - ollama: fragments/compose/ollama.md
+          - vllm: fragments/compose/vllm.md
+          - traefik: fragments/compose/traefik.md
+          - caddy: fragments/compose/caddy.md
+          - chromadb: fragments/compose/chromadb.md
+          - arcadedb: fragments/compose/arcadedb.md
+          - grafana: fragments/compose/grafana.md
+          - influxdb: fragments/compose/influxdb.md
+          - jaeger: fragments/compose/jaeger.md
+          - otel-collector: fragments/compose/otel-collector.md
+  - Stacks: stacks/index.md
+

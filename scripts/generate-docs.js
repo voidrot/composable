@@ -41,9 +41,22 @@ The following environment variables can be configured:
                 docContent += `| \`${key}\` | \`${value}\` | | \n`;
             }
         } else {
-            docContent = docContent.replace(/\| Variable.*\n\|.*\n/, '');
+            docContent = docContent.replace(/\| Variable.*\n\|.*\n\|.*\n/, '');
             docContent += "\nNo environment variables are required.\n";
         }
+
+        if (metadata.build) {
+            docContent += `\n## Build\n\nThis fragment supports building from source.\n`;
+        }
+
+        if (metadata.watch) {
+            docContent += `\n## Watch\n\nThis fragment supports live-syncing code with \`docker compose watch\`.\n`;
+        }
+
+        if (metadata.env_file) {
+            docContent += `\n## Environment File\n\nThis fragment defaults to using \`.env.compose\` for environment variable isolation.\n`;
+        }
+
 
         const outPath = path.join('docs', 'fragments', 'compose', `${name}.md`);
         await fs.writeFile(outPath, docContent);

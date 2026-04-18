@@ -21,3 +21,7 @@ The following environment variables can be configured:
 | `ARCADEDB_STUDIO_PORT` | `2480` | | 
 | `ARCADEDB_BINARY_PORT` | `2424` | | 
 | `ARCADEDB_ROOT_PASSWORD` | `playwithdata` | | 
+
+## Environment File
+
+This fragment defaults to using `.env.compose` for environment variable isolation.
