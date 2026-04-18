@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.1](https://github.com/voidrot/composable/compare/composable-v0.5.0...composable-v0.5.1) (2026-04-18)
+
+
+### Bug Fixes
+
+* consolidate release-please configuration to single package ([be8f467](https://github.com/voidrot/composable/commit/be8f467136f065eb36d35fc286d7475b923ab319))
+* wrap auto-merge conditional expression in template syntax ([1f12237](https://github.com/voidrot/composable/commit/1f1223742c2af45b0a52ee67226a3e67f4d50803))
+
 ## [0.5.0](https://github.com/voidrot/composable/compare/composable-v0.4.0...composable-v0.5.0) (2026-04-18)
 
 

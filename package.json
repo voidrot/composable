@@ -1,6 +1,6 @@
 {
   "name": "@voidrot/composable",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Reusable Docker Compose fragments and CLI for composing services",
   "main": "./dist/cli/index.js",
   "types": "./dist/cli/index.d.ts",
