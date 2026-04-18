@@ -1,18 +1,33 @@
+#!/usr/bin/env node
+
 import { Command } from 'commander';
 import fs from 'fs-extra';
 import * as path from 'path';
 import * as os from 'os';
 import * as dotenv from 'dotenv';
 import yaml from 'yaml';
+import { fileURLToPath } from 'node:url';
 
 const program = new Command();
 const CACHE_DIR = path.join(os.homedir(), '.composable', 'fragments');
 const REGISTRY_URL = 'https://voidrot.github.io/composable/latest';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const PACKAGE_JSON_PATH = path.resolve(__dirname, '../../package.json');
+
+function getCliVersion(): string {
+  try {
+    const pkg = fs.readJsonSync(PACKAGE_JSON_PATH) as { version?: string };
+    return pkg.version ?? '0.1.0';
+  } catch {
+    return '0.1.0';
+  }
+}
 
 program
   .name('composable')
   .description('Manage Docker Compose fragments')
-  .version('1.0.0');
+  .version(getCliVersion());
 
 async function ensureCacheDir() {
   await fs.ensureDir(CACHE_DIR);
@@ -285,7 +300,10 @@ program
       const vars: Record<string, string> = {};
       let match;
       while ((match = varRegex.exec(content)) !== null) {
-        vars[match[1]] = match[2] || '';
+        const key = match[1];
+        if (key) {
+          vars[key] = match[2] || '';
+        }
       }
 
       const dir = path.dirname(ymlPath);

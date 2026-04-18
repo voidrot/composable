@@ -15,6 +15,12 @@ Composable provides a centralized registry for useful Docker Compose "fragments"
 
 ## Getting Started
 
+### Install from npm
+
+```bash
+npm install -g @voidrot/composable
+```
+
 ### Using the CLI
 
 You can use the CLI to interact with the registry. For example:
@@ -41,28 +47,44 @@ If you are developing this tool locally:
 # Install dependencies
 npm install
 
+# Build the CLI package
+npm run build
+
 # Build the local registry files (generates the /registry directory)
-npm run build:registry 
+npm run build:registry
 
 # Run the CLI locally
 npx tsx src/cli/index.ts search
 ```
 
+## Releases
+
+Releases are automated with Release Please and Conventional Commits.
+
+- Merge commits like `feat: ...`, `fix: ...`, and `feat!: ...` into `main`.
+- Release Please opens or updates a release PR with version bumps and changelog updates.
+- Publishing to npm runs when a GitHub release is published.
+
+For publish-on-release automation to trigger, configure a token with permission to create releases for the Release Please workflow (for example, `RELEASE_PLEASE_TOKEN`).
+
 ## Adding New Fragments
 
 1. Create a `.yml` file in the `fragments/compose/` directory (e.g., `my-service.yml`).
 2. Run the metadata generator to create the accompanying `.json` file:
+
    ```bash
    npx tsx src/cli/index.ts init-metadata fragments/compose/my-service.yml
    ```
+
 3. Open the generated `.json` file, add a description, and verify the detected variables.
 4. Commit and push your changes. The GitHub Actions workflow will automatically rebuild the registry and deploy it.
 
 ## Registry Deployment
 
-This repository is configured to automatically deploy its registry using GitHub Actions and GitHub Pages. 
+This repository is configured to automatically deploy its registry using GitHub Actions and GitHub Pages.
 
 Whenever changes are pushed to the `main` branch, the `deploy.yml` workflow:
+
 1. Restores the previously deployed registry state.
 2. Builds and appends the new fragments.
 3. Syncs the registry data back to the `gh-pages` branch for persistence.
