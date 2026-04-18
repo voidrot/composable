@@ -1,0 +1,70 @@
+name: Deploy Registry
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'fragments/**'
+      - 'package.json'
+      - 'src/registry/**'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Restore existing registry
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: .gh-pages
+        continue-on-error: true
+
+      - name: Merge registry content
+        run: |
+          if [ -d .gh-pages ]; then
+            mkdir -p registry
+            # Copy everything except .git to registry folder
+            rsync -av --exclude='.git' .gh-pages/ registry/
+          fi
+
+      - name: Build Registry
+        run: npm run build:registry
+
+      - name: Sync back to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./registry
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Update registry content'
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './registry'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

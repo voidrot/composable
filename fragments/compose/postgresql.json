@@ -1,0 +1,10 @@
+{
+  "name": "postgresql",
+  "description": "PostgreSQL database service",
+  "variables": {
+    "POSTGRES_VERSION": "15",
+    "POSTGRES_USER": "admin",
+    "POSTGRES_PASSWORD": "password",
+    "POSTGRES_DB": "app_db"
+  }
+}

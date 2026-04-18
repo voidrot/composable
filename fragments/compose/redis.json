@@ -1,0 +1,7 @@
+{
+  "name": "redis",
+  "description": "Redis in-memory data store",
+  "variables": {
+    "REDIS_VERSION": "7"
+  }
+}
