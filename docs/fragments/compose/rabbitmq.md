@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `RABBITMQ_VERSION` | `3-management-alpine` | | 
+| `RABBITMQ_VERSION` | `4-management-alpine` | | 
 | `RABBITMQ_AMQP_PORT` | `5672` | | 
 | `RABBITMQ_UI_PORT` | `15672` | | 
 | `RABBITMQ_USER` | `guest` | | 

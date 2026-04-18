@@ -17,7 +17,7 @@ The following environment variables can be configured:
 
 | Variable | Default Value | Description |
 |----------|---------------|-------------|
-| `TRAEFIK_VERSION` | `v3.0` | | 
+| `TRAEFIK_VERSION` | `v3.3` | | 
 | `TRAEFIK_HTTP_PORT` | `80` | | 
 | `TRAEFIK_HTTPS_PORT` | `443` | | 
 | `TRAEFIK_DASHBOARD_PORT` | `8080` | | 
