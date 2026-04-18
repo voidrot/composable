@@ -4,5 +4,8 @@
   "variables": {
     "REDIS_VERSION": "8",
     "REDIS_PORT": "6379"
-  }
+  },
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "env_file": true,
+  "env_file_vars": []
 }

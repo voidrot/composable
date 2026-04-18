@@ -9,5 +9,8 @@
     "INFLUXDB_ORG": "myorg",
     "INFLUXDB_BUCKET": "mybucket",
     "INFLUXDB_ADMIN_TOKEN": "mysupersecrettoken"
-  }
+  },
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "env_file": true,
+  "env_file_vars": []
 }

@@ -11,5 +11,8 @@
       "source": "mosquitto-config.conf",
       "target": "config/mosquitto.conf"
     }
-  ]
+  ],
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "env_file": true,
+  "env_file_vars": []
 }

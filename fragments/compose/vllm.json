@@ -5,5 +5,8 @@
     "VLLM_VERSION": "latest",
     "VLLM_PORT": "8000",
     "VLLM_MODEL": "mistralai/Mistral-7B-v0.1"
-  }
+  },
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "env_file": true,
+  "env_file_vars": []
 }

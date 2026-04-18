@@ -13,5 +13,8 @@
       "source": "otel-collector-config.yaml",
       "target": "config/otel-collector-config.yaml"
     }
-  ]
+  ],
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "env_file": true,
+  "env_file_vars": []
 }

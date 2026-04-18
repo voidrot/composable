@@ -8,8 +8,17 @@
                 "fragments",
                 "registry",
                 "src/registry",
-                "docs"
+                "docs",
+                "stacks"
             ]
+        },
+        "fragments": {
+            "release-type": "simple",
+            "component": "fragments"
+        },
+        "stacks": {
+            "release-type": "simple",
+            "component": "stacks"
         }
     }
 }
