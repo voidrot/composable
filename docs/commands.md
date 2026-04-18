@@ -34,6 +34,29 @@ Download all available fragments to the local cache ($HOME/.composable/fragments
 
 Update the local cache with the latest fragments from the registry.
 
+## `upgrade [name]`
+
+Upgrade already-installed fragments in the current project's `.compose/` directory to the latest version from the registry.
+
+Unlike `update` (which only refreshes the global cache), `upgrade` directly overwrites the fragment files installed in your project and syncs any new environment variables to `.env.compose`.
+
+- **Name** *(optional)*: Upgrade a single named fragment. If omitted, all fragments in `.compose/` are upgraded.
+- **Options**:
+  - `-f, --force`: Overwrite even if the content appears unchanged (useful to force an env var sync).
+
+**Examples**:
+
+```bash
+# Upgrade all installed fragments
+composable upgrade
+
+# Upgrade only postgresql
+composable upgrade postgresql
+
+# Force overwrite even if unchanged
+composable upgrade --force
+```
+
 ## `init-metadata <path>`
 
 **Developer Tool**: Scans a `.yml` file for `${VAR}` syntax and generates a corresponding `.json` metadata file.

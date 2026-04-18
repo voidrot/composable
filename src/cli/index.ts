@@ -11,6 +11,7 @@ import { searchFragments } from "./commands/search.js";
 import { manageCache, updateCache } from "./commands/cache.js";
 import { showDocs } from "./commands/docs.js";
 import { generateStack, testFragmentOrStack, initRegistry } from "./commands/dev.js";
+import { upgradeFragments } from "./commands/upgrade.js";
 
 const program = new Command();
 const __filename = fileURLToPath(import.meta.url);
@@ -86,6 +87,13 @@ program
   .command("update")
   .description("Update cached fragments from registry")
   .action(updateCache);
+
+program
+  .command("upgrade [name]")
+  .description("Upgrade installed project fragments from the registry. Upgrades all fragments in .compose/ by default, or a single named fragment.")
+  .option("-f, --force", "Overwrite even if content appears unchanged")
+  .action(upgradeFragments);
+
 
 const devCmd = program.command("dev").description("Developer utilities");
 
