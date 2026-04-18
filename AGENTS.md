@@ -43,12 +43,23 @@ Key tools:
 
 1. **Do NOT use web search.** Use the Docker Hub MCP `list_repository_tags` tool instead.
 2. Scan `fragments/compose/*.json` for version variables (e.g. `POSTGRES_VERSION`, `REDIS_TAG`).
-3. For each image, call `list_repository_tags` and find the latest **stable** tag (avoid `latest`, `edge`, `nightly`, `beta`, `rc`).
-4. Prefer **specific version tags** (e.g. `16.3`, `7.2.5`) over generic aliases.
+3. For each image, call `list_repository_tags` and identify the best tag using this **priority order**:
+   - **Prefer major-version tags** that include the image variant suffix (e.g. `4-management-alpine`, `16-alpine`, `8-jre`). These float to the latest patch automatically.
+   - If no major-version tag exists for the required variant, use the latest **minor-version tag** (e.g. `16.3`, `7.2`).
+   - Only fall back to a full semver tag (e.g. `4.2.5-management-alpine`) if neither of the above is available.
+   - **Never use** `latest`, `edge`, `nightly`, `beta`, or `rc` tags.
+4. Tag selection examples:
+   | Image | Prefer | Avoid |
+   |---|---|---|
+   | `rabbitmq` with management + alpine | `4-management-alpine` | `4.2.5-management-alpine` or `latest` |
+   | `postgres` with alpine | `16-alpine` | `16.3-alpine` or `latest` |
+   | `redis` | `7-alpine` | `7.2.5-alpine` or `latest` |
+   | `eclipse-mosquitto` | `2` | `2.0.21` or `latest` |
 5. Update the version in the `.json` `variables` field.
 6. Update any hardcoded tags in the corresponding `.yml` file.
 7. Run `npm run validate` to ensure schemas are satisfied.
 8. Update frontmatter in any corresponding `docs/fragments/<name>.md` if it has a version field.
+
 
 ### Adding a New Fragment
 
