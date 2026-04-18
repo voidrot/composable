@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:registry": "ts-node src/registry/build.ts",
+    "build:registry": "ts-node-esm src/registry/build.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
