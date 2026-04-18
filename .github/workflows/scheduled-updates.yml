@@ -59,13 +59,33 @@ jobs:
                 'X-GitHub-Api-Version': '2022-11-28'
               }
             });
+
             console.log(`Created issue ${issue.data.number}`);
+
+            // Attempt direct GraphQL assignment to the Copilot Bot ID
+            try {
+              const mutation = `
+                mutation($id: ID!, $actorIds: [ID!]!) {
+                  replaceActorsForAssignable(input: { assignableId: $id, actorIds: $actorIds }) {
+                    assignable { ... on Issue { id } }
+                  }
+                }
+              `;
+              await github.graphql(mutation, {
+                id: issue.data.node_id,
+                actorIds: ["BOT_kgDOC9w8XQ"]
+              });
+              console.log(`Successfully assigned Copilot to issue ${issue.data.number}`);
+            } catch (e) {
+              console.log(`Assignment failed: ${e.message}. Falling back to comment mention.`);
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.data.number,
+                body: "@copilot review these changes and submit a pull request."
+              });
+            }
+
             return issue.data.number;
 
-      - name: Assign @copilot
-        if: steps.create_issue.outputs.result
-        env:
-          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
-        run: |
-          gh issue edit ${{ steps.create_issue.outputs.result }} --add-assignee "copilot"
 
