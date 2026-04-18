@@ -87,10 +87,24 @@
     },
     {
       "type": "compose",
+      "name": "chromadb",
+      "description": "Open-source AI application database (vector database)",
+      "path": "compose/chromadb.yml",
+      "metadataPath": "compose/chromadb.json"
+    },
+    {
+      "type": "compose",
       "name": "caddy",
       "description": "Caddy web server with automatic HTTPS",
       "path": "compose/caddy.yml",
       "metadataPath": "compose/caddy.json"
+    },
+    {
+      "type": "compose",
+      "name": "arcadedb",
+      "description": "Multi-model database engine (Graph, Document, Key/Value, Search)",
+      "path": "compose/arcadedb.yml",
+      "metadataPath": "compose/arcadedb.json"
     }
   ]
 }
