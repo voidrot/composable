@@ -1,0 +1,13 @@
+{
+  "name": "arcadedb",
+  "description": "Multi-model database engine (Graph, Document, Key/Value, Search)",
+  "variables": {
+    "ARCADEDB_VERSION": "26.3.2",
+    "ARCADEDB_STUDIO_PORT": "2480",
+    "ARCADEDB_BINARY_PORT": "2424",
+    "ARCADEDB_ROOT_PASSWORD": "playwithdata"
+  },
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "env_file": true,
+  "env_file_vars": []
+}

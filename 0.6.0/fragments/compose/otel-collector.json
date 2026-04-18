@@ -1,0 +1,20 @@
+{
+  "name": "otel-collector",
+  "description": "OpenTelemetry Collector Contrib",
+  "variables": {
+    "OTEL_VERSION": "0.150.1",
+    "OTEL_RECEIVER_GRPC_PORT": "4317",
+    "OTEL_RECEIVER_HTTP_PORT": "4318",
+    "OTEL_METRICS_PORT": "8888",
+    "OTEL_HEALTH_PORT": "13133"
+  },
+  "configs": [
+    {
+      "source": "otel-collector-config.yaml",
+      "target": "config/otel-collector-config.yaml"
+    }
+  ],
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "env_file": true,
+  "env_file_vars": []
+}

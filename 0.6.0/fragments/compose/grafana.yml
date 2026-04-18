@@ -1,0 +1,13 @@
+services:
+  grafana:
+    image: grafana/grafana:${GRAFANA_VERSION:-13.0}
+    ports:
+      - ${GRAFANA_PORT:-3000}:3000
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+volumes:
+  grafana_data:
