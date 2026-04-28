@@ -4,7 +4,7 @@ description: Valkey - The Redis-compatible in-memory data structure store
 tags:
   - compose
   - fragment
-last_updated: 2026-04-18
+last_updated: 2026-04-28
 ---
 
 # valkey

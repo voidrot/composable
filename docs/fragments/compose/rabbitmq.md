@@ -4,7 +4,7 @@ description: RabbitMQ message broker with Management UI enabled
 tags:
   - compose
   - fragment
-last_updated: 2026-04-18
+last_updated: 2026-04-28
 ---
 
 # rabbitmq

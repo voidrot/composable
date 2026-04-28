@@ -3,7 +3,7 @@ title: django-base
 description: A complete Django stack with PostgreSQL, Valkey, Celery, and Flower
 tags:
   - stack
-last_updated: 2026-04-18
+last_updated: 2026-04-28
 ---
 
 # django-base

@@ -4,7 +4,7 @@ description: Django web framework using python:3.14
 tags:
   - compose
   - fragment
-last_updated: 2026-04-18
+last_updated: 2026-04-28
 ---
 
 # django

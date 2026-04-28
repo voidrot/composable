@@ -29,6 +29,7 @@ nav:
           - grafana: fragments/compose/grafana.md
           - influxdb: fragments/compose/influxdb.md
           - jaeger: fragments/compose/jaeger.md
+          - mailpit: fragments/compose/mailpit.md
           - nats: fragments/compose/nats.md
           - ollama: fragments/compose/ollama.md
           - otel-collector: fragments/compose/otel-collector.md
