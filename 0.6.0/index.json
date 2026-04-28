@@ -73,6 +73,13 @@
     },
     {
       "type": "compose",
+      "name": "mailpit",
+      "description": "Mailpit is a multi-platform email testing tool for developers",
+      "path": "fragments/compose/mailpit.yml",
+      "metadataPath": "fragments/compose/mailpit.json"
+    },
+    {
+      "type": "compose",
       "name": "jaeger",
       "description": "Jaeger distributed tracing system (all-in-one)",
       "path": "fragments/compose/jaeger.yml",

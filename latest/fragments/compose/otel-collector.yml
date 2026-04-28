@@ -1,11 +1,17 @@
 services:
   otel-collector:
     image: otel/opentelemetry-collector-contrib:${OTEL_VERSION:-0.150.1}
-    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    command: [ "--config=/etc/otelcol-contrib/config.yaml" ]
+    environment:
+      OTEL_FORWARD_OTLP_ENDPOINT: ${OTEL_FORWARD_OTLP_ENDPOINT:-signoz-otel-collector:4317}
+      OTEL_FORWARD_OTLP_INSECURE: ${OTEL_FORWARD_OTLP_INSECURE:-true}
     volumes:
       - ./config/otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
     ports:
       - ${OTEL_RECEIVER_GRPC_PORT:-4317}:4317 # OTLP gRPC receiver
       - ${OTEL_RECEIVER_HTTP_PORT:-4318}:4318 # OTLP http receiver
-      - ${OTEL_METRICS_PORT:-8888}:8888       # Metrics
-      - ${OTEL_HEALTH_PORT:-13133}:13133      # Healthcheck
+      - ${OTEL_METRICS_PORT:-8888}:8888 # Metrics
+      - ${OTEL_HEALTH_PORT:-13133}:13133 # Healthcheck
+      - ${OTEL_RECEIVER_JAEGER_GRPC_PORT:-14250}:14250
+      - ${OTEL_RECEIVER_JAEGER_HTTP_PORT:-14268}:14268
+      - ${OTEL_RECEIVER_ZIPKIN_PORT:-9411}:9411

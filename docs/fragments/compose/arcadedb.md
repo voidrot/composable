@@ -4,7 +4,7 @@ description: Multi-model database engine (Graph, Document, Key/Value, Search)
 tags:
   - compose
   - fragment
-last_updated: 2026-04-18
+last_updated: 2026-04-28
 ---
 
 # arcadedb

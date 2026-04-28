@@ -4,7 +4,7 @@ description: High-throughput and memory-efficient LLM inference and serving engi
 tags:
   - compose
   - fragment
-last_updated: 2026-04-18
+last_updated: 2026-04-28
 ---
 
 # vllm
@@ -20,6 +20,8 @@ The following environment variables can be configured:
 | `VLLM_VERSION` | `v0.19.1` | | 
 | `VLLM_PORT` | `8000` | | 
 | `VLLM_MODEL` | `mistralai/Mistral-7B-v0.1` | | 
+| `GPU_DRIVER` | `nvidia` | | 
+| `GPU_COUNT` | `all` | | 
 
 ## Environment File
 

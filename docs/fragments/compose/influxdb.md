@@ -4,7 +4,7 @@ description: InfluxDB time series database
 tags:
   - compose
   - fragment
-last_updated: 2026-04-18
+last_updated: 2026-04-28
 ---
 
 # influxdb
@@ -20,10 +20,10 @@ The following environment variables can be configured:
 | `INFLUXDB_VERSION` | `2` | | 
 | `INFLUXDB_PORT` | `8086` | | 
 | `INFLUXDB_ADMIN_USER` | `admin` | | 
-| `INFLUXDB_ADMIN_PASSWORD` | `adminpassword` | | 
-| `INFLUXDB_ORG` | `myorg` | | 
-| `INFLUXDB_BUCKET` | `mybucket` | | 
-| `INFLUXDB_ADMIN_TOKEN` | `mysupersecrettoken` | | 
+| `INFLUXDB_ADMIN_PASSWORD` | `admin123` | | 
+| `INFLUXDB_ORG` | `my-org` | | 
+| `INFLUXDB_BUCKET` | `my-bucket` | | 
+| `INFLUXDB_ADMIN_TOKEN` | `my-super-secret-auth-token` | | 
 
 ## Environment File
 
