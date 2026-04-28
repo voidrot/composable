@@ -1,0 +1,9 @@
+services:
+  django:
+    image: python:3.14
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "${DJANGO_PORT:-8000}:8000"

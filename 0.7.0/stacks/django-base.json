@@ -1,0 +1,63 @@
+{
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/stack.schema.json",
+  "name": "django-base",
+  "description": "A complete Django stack with PostgreSQL, Valkey, Celery, and Flower",
+  "fragments": [
+    {
+      "type": "compose",
+      "name": "postgresql"
+    },
+    {
+      "type": "compose",
+      "name": "valkey"
+    },
+    {
+      "type": "compose",
+      "name": "django",
+      "depends_on": {
+        "postgresql": {
+          "condition": "service_healthy"
+        },
+        "valkey": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "type": "compose",
+      "name": "celery",
+      "depends_on": {
+        "postgresql": {
+          "condition": "service_healthy"
+        },
+        "valkey": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "type": "compose",
+      "name": "celery-beat",
+      "depends_on": {
+        "postgresql": {
+          "condition": "service_healthy"
+        },
+        "valkey": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "type": "compose",
+      "name": "celery-flower",
+      "depends_on": {
+        "postgresql": {
+          "condition": "service_healthy"
+        },
+        "valkey": {
+          "condition": "service_healthy"
+        }
+      }
+    }
+  ]
+}
