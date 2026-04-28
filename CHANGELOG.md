@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.7.0](https://github.com/voidrot/composable/compare/composable-v0.6.0...composable-v0.7.0) (2026-04-28)
+
+
+### Features
+
+* **cli:** add environment overrides for repo dir and env files, and --profile support ([49d62e1](https://github.com/voidrot/composable/commit/49d62e1b0bbeb4edbd14cbbb3db6503531c46ea9))
+* **fragments:** add mailpit fragment ([9b3efa0](https://github.com/voidrot/composable/commit/9b3efa04bac18bfb7fc0722b5f81de84fbb11faf))
+* **fragments:** enable jetstream persistence for nats ([668de3c](https://github.com/voidrot/composable/commit/668de3cad70732bc84a156301e2561201bd376aa))
+* **fragments:** enhance otel-collector with forwarding and additional receivers ([da87822](https://github.com/voidrot/composable/commit/da87822778635f2e1280f12d88af0989576d5e50))
+
 ## [0.6.0](https://github.com/voidrot/composable/compare/composable-v0.5.1...composable-v0.6.0) (2026-04-18)
 
 
