@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/voidrot/composable/compare/composable-v0.7.0...composable-v0.7.1) (2026-04-28)
+
+
+### Bug Fixes
+
+* **cli:** make extends and env_file paths relative to the target compose file ([fc8e389](https://github.com/voidrot/composable/commit/fc8e3895f77fc7289e176e3b87bcb12036e07dae))
+
 ## [0.7.0](https://github.com/voidrot/composable/compare/composable-v0.6.0...composable-v0.7.0) (2026-04-28)
 
 
