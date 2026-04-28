@@ -1,0 +1,7 @@
+services:
+  celery-beat:
+    image: python:3.14
+    command: celery -A core beat -l INFO
+    volumes:
+      - .:/app
+    working_dir: /app

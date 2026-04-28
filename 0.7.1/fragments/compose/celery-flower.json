@@ -1,0 +1,31 @@
+{
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "name": "celery-flower",
+  "description": "Celery Flower monitor for Django",
+  "variables": {
+    "FLOWER_PORT": "5555"
+  },
+  "build": {
+    "context": ".",
+    "dockerfile": "Dockerfile"
+  },
+  "watch": [
+    {
+      "action": "sync",
+      "path": ".",
+      "target": "/app",
+      "ignore": [
+        "node_modules/",
+        ".git/",
+        "__pycache__/",
+        "*.pyc"
+      ]
+    },
+    {
+      "action": "rebuild",
+      "path": "requirements.txt"
+    }
+  ],
+  "env_file": true,
+  "env_file_vars": []
+}

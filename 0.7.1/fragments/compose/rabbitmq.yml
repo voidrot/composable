@@ -1,0 +1,19 @@
+services:
+  rabbitmq:
+    image: rabbitmq:${RABBITMQ_VERSION:-4-management-alpine}
+    ports:
+      - ${RABBITMQ_AMQP_PORT:-5672}:5672
+      - ${RABBITMQ_UI_PORT:-15672}:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-guest}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  rabbitmq_data:

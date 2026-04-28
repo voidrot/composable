@@ -1,0 +1,19 @@
+{
+  "name": "caddy",
+  "description": "Caddy web server with automatic HTTPS",
+  "variables": {
+    "CADDY_VERSION": "2-alpine",
+    "CADDY_HTTP_PORT": "80",
+    "CADDY_HTTPS_PORT": "443",
+    "CADDY_HTTPS_UDP_PORT": "443"
+  },
+  "configs": [
+    {
+      "source": "caddy-config.Caddyfile",
+      "target": "config/Caddyfile"
+    }
+  ],
+  "$schema": "https://voidrot.github.io/composable/latest/schemas/fragment.schema.json",
+  "env_file": true,
+  "env_file_vars": []
+}
