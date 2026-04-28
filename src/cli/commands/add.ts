@@ -131,9 +131,14 @@ export async function addFragment(type: string, name: string, options: any) {
                     const originalServiceName = item.key.value;
                     const finalServiceName = options.name || originalServiceName;
                     
+                    const relativeFragmentPath = path.relative(
+                        path.dirname(composePath),
+                        path.join(targetDir, `${name}.yml`)
+                    );
+
                     const serviceConfig: any = {
                         extends: {
-                            file: `${composeDirName}/${name}.yml`,
+                            file: relativeFragmentPath,
                             service: originalServiceName,
                         },
                     };
@@ -151,10 +156,14 @@ export async function addFragment(type: string, name: string, options: any) {
                     const useWatch = options.watch ?? config.defaults?.watch ?? true;
                     const useEnvFile = options.envFile ?? config.defaults?.env_file ?? true;
                     const composeEnvName = process.env.COMPOSABLE_COMPOSE_ENV_FILE || ".env.compose";
+                    const relativeComposeEnvPath = path.relative(
+                        path.dirname(composePath),
+                        path.join(process.cwd(), composeEnvName)
+                    );
 
                     if (useEnvFile && metadata.env_file) {
-                        serviceConfig.env_file = [composeEnvName];
-                        console.log(`\n  [Info] Added env_file: - ${composeEnvName} for '${finalServiceName}'.`);
+                        serviceConfig.env_file = [relativeComposeEnvPath];
+                        console.log(`\n  [Info] Added env_file: - ${relativeComposeEnvPath} for '${finalServiceName}'.`);
                     }
 
                     if (options.restart) {

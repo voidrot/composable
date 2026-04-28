@@ -93,7 +93,8 @@ export async function upgradeFragments(name: string | undefined, options: any) {
                     await fs.writeFile(cacheMetaPath, metadataContent);
 
                     if (metadata.variables && Object.keys(metadata.variables).length > 0) {
-                        const composeEnvPath = path.join(process.cwd(), '.env.compose');
+                        const composeEnvName = process.env.COMPOSABLE_COMPOSE_ENV_FILE || ".env.compose";
+                        const composeEnvPath = path.join(process.cwd(), composeEnvName);
                         let composeEnvContent = '';
                         if (await fs.pathExists(composeEnvPath)) {
                             composeEnvContent = await fs.readFile(composeEnvPath, 'utf-8');
@@ -119,7 +120,7 @@ export async function upgradeFragments(name: string | undefined, options: any) {
                                 composeEnvPath,
                                 `\n# New variables from upgraded fragment: ${fragName}\n${newLines}`
                             );
-                            console.log(`  → Added new env vars for '${fragName}' to .env.compose`);
+                            console.log(`  → Added new env vars for '${fragName}' to ${composeEnvName}`);
                         }
                     }
                 } catch (e) {
