@@ -46,6 +46,7 @@ program
   .option("--env-file", "Add env_file configuration if present in the fragment")
   .option("--no-env-file", "Do not add env_file configuration if present in the fragment")
   .option("--restart <policy>", "Restart policy for the service", "unless-stopped")
+  .option("--profile <profile>", "Add a profile to the fragment block being added")
   .action(addFragment);
 
 const stackCmd = program.command("stack").description("Manage stacks of fragments");

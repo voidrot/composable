@@ -79,7 +79,8 @@ export async function addFragment(type: string, name: string, options: any) {
         }
 
         // Copy to local .compose directory
-        const targetDir = path.join(process.cwd(), ".compose");
+        const composeDirName = process.env.COMPOSABLE_REPO_DIR || ".compose";
+        const targetDir = path.resolve(process.cwd(), composeDirName);
         await fs.ensureDir(targetDir);
         await fs.copy(localFragmentPath, path.join(targetDir, `${name}.yml`));
 
@@ -91,16 +92,25 @@ export async function addFragment(type: string, name: string, options: any) {
                 "docker-compose.yaml",
             ];
             let composePath = "";
-            for (const file of composeFiles) {
-                if (await fs.pathExists(path.join(process.cwd(), file))) {
-                    composePath = path.join(process.cwd(), file);
-                    break;
+            
+            if (process.env.COMPOSABLE_COMPOSE_FILE_TARGET) {
+                composePath = path.resolve(process.cwd(), process.env.COMPOSABLE_COMPOSE_FILE_TARGET);
+                if (!(await fs.pathExists(composePath))) {
+                    await fs.ensureDir(path.dirname(composePath));
+                    await fs.writeFile(composePath, "services:\n");
                 }
-            }
+            } else {
+                for (const file of composeFiles) {
+                    if (await fs.pathExists(path.join(process.cwd(), file))) {
+                        composePath = path.join(process.cwd(), file);
+                        break;
+                    }
+                }
 
-            if (!composePath) {
-                composePath = path.join(process.cwd(), "compose.yml");
-                await fs.writeFile(composePath, "services:\n");
+                if (!composePath) {
+                    composePath = path.join(process.cwd(), "compose.yml");
+                    await fs.writeFile(composePath, "services:\n");
+                }
             }
 
             const composeContent = await fs.readFile(composePath, "utf-8");
@@ -123,7 +133,7 @@ export async function addFragment(type: string, name: string, options: any) {
                     
                     const serviceConfig: any = {
                         extends: {
-                            file: `.compose/${name}.yml`,
+                            file: `${composeDirName}/${name}.yml`,
                             service: originalServiceName,
                         },
                     };
@@ -140,15 +150,21 @@ export async function addFragment(type: string, name: string, options: any) {
                     const useBuild = options.build ?? config.defaults?.build ?? true;
                     const useWatch = options.watch ?? config.defaults?.watch ?? true;
                     const useEnvFile = options.envFile ?? config.defaults?.env_file ?? true;
+                    const composeEnvName = process.env.COMPOSABLE_COMPOSE_ENV_FILE || ".env.compose";
 
                     if (useEnvFile && metadata.env_file) {
-                        serviceConfig.env_file = ["- .env.compose"];
-                        console.log(`\n  [Info] Added env_file: - .env.compose for '${finalServiceName}'.`);
+                        serviceConfig.env_file = [composeEnvName];
+                        console.log(`\n  [Info] Added env_file: - ${composeEnvName} for '${finalServiceName}'.`);
                     }
 
                     if (options.restart) {
                         serviceConfig.restart = options.restart;
                         console.log(`\n  [Info] Added restart: ${options.restart} for '${finalServiceName}'.`);
+                    }
+
+                    if (options.profile) {
+                        serviceConfig.profiles = [options.profile];
+                        console.log(`\n  [Info] Added profile: ${options.profile} for '${finalServiceName}'.`);
                     }
 
                     if (options.dependsOn) {
@@ -227,7 +243,7 @@ export async function addFragment(type: string, name: string, options: any) {
                     if (config.source && config.target) {
                         const configRegistryPath = path.join('fragments', type, config.source);
                         const localConfigCachePath = path.join(CACHE_DIR, configRegistryPath);
-                        const targetConfigPath = path.join(process.cwd(), ".compose", config.target);
+                        const targetConfigPath = path.join(targetDir, config.target);
 
                         if (!(await fs.pathExists(localConfigCachePath))) {
                             try {
@@ -243,15 +259,20 @@ export async function addFragment(type: string, name: string, options: any) {
                         if (await fs.pathExists(localConfigCachePath)) {
                             await fs.ensureDir(path.dirname(targetConfigPath));
                             await fs.copy(localConfigCachePath, targetConfigPath);
-                            console.log(`Added config to ./.compose/${config.target}`);
+                            console.log(`Added config to ./${composeDirName}/${config.target}`);
                         }
                     }
                 }
             }
 
             if (metadata.variables) {
-                const composeEnvPath = path.join(process.cwd(), ".env.compose");
-                const envPath = path.join(process.cwd(), ".env");
+                const composeEnvName = process.env.COMPOSABLE_COMPOSE_ENV_FILE || ".env.compose";
+                const envName = process.env.COMPOSABLE_ENV_FILE || ".env";
+                const exampleEnvName = process.env.COMPOSABLE_EXAMPLE_ENV_FILE || ".env.example";
+
+                const composeEnvPath = path.join(process.cwd(), composeEnvName);
+                const envPath = path.join(process.cwd(), envName);
+                const exampleEnvPath = path.join(process.cwd(), exampleEnvName);
 
                 let composeEnvContent = "";
                 if (await fs.pathExists(composeEnvPath)) {
@@ -265,10 +286,18 @@ export async function addFragment(type: string, name: string, options: any) {
                 }
                 const existingVars = dotenv.parse(envContent);
 
+                let exampleEnvContent = "";
+                if (await fs.pathExists(exampleEnvPath)) {
+                    exampleEnvContent = await fs.readFile(exampleEnvPath, "utf-8");
+                }
+                const existingExampleVars = dotenv.parse(exampleEnvContent);
+
                 let composeUpdated = false;
                 let envUpdated = false;
+                let exampleUpdated = false;
                 let composeNewLines = "\n# Composable variables for " + (options.name || name) + "\n";
                 let envNewLines = "\n# Composable variables for " + (options.name || name) + "\n";
+                let exampleNewLines = "\n# Composable variables for " + (options.name || name) + "\n";
 
                 const envFileVars = Array.isArray(metadata.env_file_vars) ? metadata.env_file_vars : [];
 
@@ -284,21 +313,31 @@ export async function addFragment(type: string, name: string, options: any) {
                         envNewLines += `# ${mappedKey}=${value}\n`;
                         envUpdated = true;
                     }
+
+                    if (!(mappedKey in existingExampleVars)) {
+                        exampleNewLines += `# ${mappedKey}=${value}\n`;
+                        exampleUpdated = true;
+                    }
                 }
 
                 if (composeUpdated) {
                     await fs.appendFile(composeEnvPath, composeNewLines);
-                    console.log(`Updated .env.compose with default variables for ${options.name || name}`);
+                    console.log(`Updated ${composeEnvName} with default variables for ${options.name || name}`);
                 }
 
                 if (envUpdated) {
                     await fs.appendFile(envPath, envNewLines);
-                    console.log(`Updated .env with default variables for ${options.name || name}`);
+                    console.log(`Updated ${envName} with default variables for ${options.name || name}`);
+                }
+
+                if (exampleUpdated) {
+                    await fs.appendFile(exampleEnvPath, exampleNewLines);
+                    console.log(`Updated ${exampleEnvName} with default variables for ${options.name || name}`);
                 }
             }
         }
 
-        console.log(`Successfully added ${options.name || name} to ./.compose/${name}.yml`);
+        console.log(`Successfully added ${options.name || name} to ./${composeDirName}/${name}.yml`);
     } catch (error: any) {
         console.error(`Error adding fragment: ${error.message}`);
     }

@@ -23,7 +23,8 @@
     "validate": "tsx scripts/validate.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "prepublishOnly": "npm run build && npm run typecheck && npm test"
+    "prepublishOnly": "npm run build && npm run typecheck && npm test",
+    "cli": "tsx src/cli/index.ts"
   },
   "repository": {
     "type": "git",

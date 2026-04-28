@@ -10,10 +10,11 @@ interface UpgradeResult {
 }
 
 export async function upgradeFragments(name: string | undefined, options: any) {
-    const targetDir = path.join(process.cwd(), '.compose');
+    const composeDirName = process.env.COMPOSABLE_REPO_DIR || ".compose";
+    const targetDir = path.resolve(process.cwd(), composeDirName);
 
     if (!(await fs.pathExists(targetDir))) {
-        console.error('No .compose directory found. Run `composable add` first.');
+        console.error(`No ${composeDirName} directory found. Run \`composable add\` first.`);
         process.exit(1);
     }
 
@@ -23,7 +24,7 @@ export async function upgradeFragments(name: string | undefined, options: any) {
         .map(f => path.basename(f, '.yml'));
 
     if (installed.length === 0) {
-        console.log('No fragments installed in .compose/. Nothing to upgrade.');
+        console.log(`No fragments installed in ${composeDirName}/. Nothing to upgrade.`);
         return;
     }
 
@@ -31,7 +32,7 @@ export async function upgradeFragments(name: string | undefined, options: any) {
     const targets = name ? installed.filter(f => f === name) : installed;
 
     if (targets.length === 0) {
-        console.error(`Fragment '${name}' is not installed in .compose/.`);
+        console.error(`Fragment '${name}' is not installed in ${composeDirName}/.`);
         process.exit(1);
     }
 
