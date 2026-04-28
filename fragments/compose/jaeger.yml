@@ -6,4 +6,4 @@ services:
       - ${JAEGER_OTLP_GRPC_PORT:-4317}:4317
       - ${JAEGER_OTLP_HTTP_PORT:-4318}:4318
     environment:
-      - COLLECTOR_OTLP_ENABLED=true
+      COLLECTOR_OTLP_ENABLED: "true"
