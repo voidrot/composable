@@ -1,0 +1,24 @@
+services:
+  mailpit:
+    image: axllent/mailpit:${MAILPIT_VERSION:-v1.29}
+    ports:
+      - "${MAILPIT_HTTP_PORT:-8025}:8025"
+      - "${MAILPIT_SMTP_PORT:-1025}:1025"
+    environment:
+      MP_MAX_MESSAGES: ${MAILPIT_MAX_MESSAGES:-500}
+      MP_DATABASE: ${MAILPIT_DATABASE:-}
+      MP_ALLOW_INTERNAL_HTTP_REQUESTS: ${MP_ALLOW_INTERNAL_HTTP_REQUESTS:-true}
+      MP_DISABLE_HTTP_COMPRESSION: ${MP_DISABLE_HTTP_COMPRESSION:-true}
+      MP_SEND_API_AUTH_ACCEPT_ANY: ${MP_SEND_API_AUTH_ACCEPT_ANY:-true}
+      MP_SMTP_DISABLE_RDNS: ${MP_SMTP_DISABLE_RDNS:-true}
+      MP_WEBHOOK_URL: ${MP_WEBHOOK_URL:-}
+    volumes:
+      - mailpit_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8025/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  mailpit_data:
